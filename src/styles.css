@@ -1,12 +1,39 @@
 /* You can add global styles to this file, and also import other style files */
 html {
     height: 100%;
+    background-color: transparent;
+    border-radius: 25px;
 }
 body {
     height: 100%;
+    background-color: transparent !important;
 }
 
 app-root {
     display: block;
     height: 100%;
+    background-color: transparent;
+}
+
+.btn-windows, .btn-windows:focus {
+    -webkit-app-region: no-drag;
+    padding: 0;
+    margin: 0 5px;
+    font-size: 25px;
+    border: none;
+    background: transparent;
+    outline: none;
+}
+
+.btn-windows:hover {
+    position: relative;
+    top: -1.5px;
+    left: -1px;
+    -webkit-app-region: no-drag;
+    padding: 0;
+    margin: 0 5px;
+    font-size: 25px;
+    border: none;
+    background: transparent;
+    outline: none;
 }

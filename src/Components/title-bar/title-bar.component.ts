@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ElectronService } from 'ngx-electron';
 
 @Component({
   selector: 'app-title-bar',
@@ -7,9 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TitleBarComponent implements OnInit {
 
-  constructor() { }
+  constructor(private electronService: ElectronService) { }
 
   ngOnInit() {
+  }
+
+  closeWindow() {
+    console.log('CloseWindow');
+    const window = this.electronService.remote.getCurrentWindow();
+    window.close();
   }
 
 }

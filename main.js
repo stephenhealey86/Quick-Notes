@@ -9,8 +9,10 @@ function createWindow () {
   win = new BrowserWindow({
     width: 800,
     height: 600,
+    transparent: true,
     frame: false,
     webPreferences: {
+      devTools: false,
       nodeIntegration: true,
       webSecurity: false
     }

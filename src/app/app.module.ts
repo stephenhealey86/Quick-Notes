@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { TitleBarComponent } from 'src/Components/title-bar/title-bar.component';
+import { NgxElectronModule } from 'ngx-electron';
 
 @NgModule({
   declarations: [
@@ -12,7 +13,8 @@ import { TitleBarComponent } from 'src/Components/title-bar/title-bar.component'
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    NgxElectronModule
   ],
   providers: [],
   bootstrap: [AppComponent]
