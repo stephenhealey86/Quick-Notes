@@ -2,11 +2,11 @@
 html {
     height: 100%;
     background-color: transparent;
-    border-radius: 25px;
 }
 body {
     height: 100%;
     background-color: transparent !important;
+    overflow: hidden;
 }
 
 app-root {
@@ -15,7 +15,16 @@ app-root {
     background-color: transparent;
 }
 
-.btn-windows, .btn-windows:focus {
+.AllCornersRounded {
+    border-radius: 25px;
+}
+
+.TopCornersRounded {
+    border-radius: 25px 25px 0 0;
+}
+
+.btn-windows, .btn-windows:focus, .btn-windows-close, .btn-windows-close:focus {
+    color: #d9d9d9;
     -webkit-app-region: no-drag;
     padding: 0;
     margin: 0 5px;
@@ -26,6 +35,21 @@ app-root {
 }
 
 .btn-windows:hover {
+    color: #cccccc;
+    position: relative;
+    top: -1.5px;
+    left: -1px;
+    -webkit-app-region: no-drag;
+    padding: 0;
+    margin: 0 5px;
+    font-size: 25px;
+    border: none;
+    background: transparent;
+    outline: none;
+}
+
+.btn-windows-close:hover {
+    color: #ff3333;
     position: relative;
     top: -1.5px;
     left: -1px;

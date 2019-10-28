@@ -1,0 +1,16 @@
+<div (mousedown)="BringToFront($event, noteFrame)" class="NoteFrame d-flex flex-column" style="margin: 20px;" *ngFor="let noteFrame of Notes; let i = index">
+    <span class="note-input d-flex justify-content-between">
+        <button (mouseleave)="MouseUp(noteFrame)" (mouseup)="MouseUp(noteFrame)" (mousemove)="MouseMove($event, noteFrame)" (mousedown)="MouseDown(noteFrame)" [ngClass]="{'btn-draggable': noteFrame.Draggable}" class="btn-drag">
+            <i class="fas fa-arrows-alt"></i>
+        </button>
+        <input placeholder="Title" (keydown)="KeyPressed($event, i)" class="flex-grow-1" type="text" [(ngModel)]="noteFrame.Data.Title">
+        <button (click)="NotePriorityChanged(noteFrame.Data)" class="btn-windows">
+                <i *ngIf="noteFrame.Data.Priority == 0 || noteFrame.Data.Priority == null" style="opacity: 0.5;" class="fas fa-exclamation-circle"></i>
+                <i *ngIf="noteFrame.Data.Priority == 1" style="color: orange;" class="fas fa-exclamation-circle"></i>
+                <i *ngIf="noteFrame.Data.Priority == 2" style="color: orangered;" class="fas fa-exclamation-circle"></i>
+                <i *ngIf="noteFrame.Data.Priority == 3" style="color: green;" class="fas fa-check-circle"></i>
+        </button>
+        <button (click)="DeleteNote(noteFrame)" class="btn-windows-close"><i class="fas fa-times-circle"></i></button>
+    </span>
+    <textarea id="textarea{{i}}" (keyup)="ResizeTextArea(i)" placeholder="{{noteFrame.Data.Title}}" rows="3" [(ngModel)]="noteFrame.Data.Content"></textarea>
+</div>

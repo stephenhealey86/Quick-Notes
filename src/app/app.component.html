@@ -1,3 +1,4 @@
-<div>
-<app-title-bar></app-title-bar>
+<div class="d-flex flex-column" [ngClass]="{'AllCornersRounded': !windowState}">
+<app-title-bar (windowState)="ChangeWindowState($event)"></app-title-bar>
+<app-main></app-main>
 </div>

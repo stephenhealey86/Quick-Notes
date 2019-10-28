@@ -7,4 +7,9 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'QuickNotes';
+  windowState = false;
+
+  ChangeWindowState(state: boolean) {
+    this.windowState = state;
+  }
 }

@@ -1,0 +1,20 @@
+<nav [ngClass]="{'TopCornersRounded': !windowIsMaximised}" class="windows-title bg-light">
+  <div class="d-flex w-100 align-items-center">
+    <span class="invisible mr-2 d-flex">
+      <button (click)="minWindow()" class="btn-windows"><i class="fas fa-window-minimize"></i></button>
+      <button (click)="maxWindow()" class="btn-windows"><i class="fas fa-window-restore"></i></button>
+      <button (click)="closeWindow()" class="btn-windows"><i class="fas fa-window-close"></i></button>
+    </span>
+    <span class="w-100 text-center">
+      <p class="m-0">QuickNotes</p>
+    </span>
+    <span class="mr-2 d-flex">
+      <button (click)="minWindow()" class="btn-windows"><i class="fas fa-window-minimize"></i></button>
+      <button (click)="maxWindow()" class="btn-windows">
+        <i *ngIf="windowIsMaximised" class="fas fa-window-restore"></i>
+        <i *ngIf="!windowIsMaximised" class="fas fa-window-maximize"></i>
+      </button>
+      <button (click)="closeWindow()" class="btn-windows-close"><i class="fas fa-window-close"></i></button>
+    </span>
+  </div>
+</nav>
