@@ -1,4 +1,4 @@
-<div (mousedown)="BringToFront($event, noteFrame)" class="NoteFrame d-flex flex-column" style="margin: 20px;" *ngFor="let noteFrame of Notes; let i = index">
+<div (mousedown)="BringToFront($event, noteFrame)" class="NoteFrame d-flex flex-column" style="margin: 20px;" *ngFor="let noteFrame of settings.Notes; let i = index">
     <span class="note-input d-flex justify-content-between">
         <button (mouseleave)="MouseUp(noteFrame)" (mouseup)="MouseUp(noteFrame)" (mousemove)="MouseMove($event, noteFrame)" (mousedown)="MouseDown(noteFrame)" [ngClass]="{'btn-draggable': noteFrame.Draggable}" class="btn-drag">
             <i class="fas fa-arrows-alt"></i>
@@ -12,5 +12,5 @@
         </button>
         <button (click)="DeleteNote(noteFrame)" class="btn-windows-close"><i class="fas fa-times-circle"></i></button>
     </span>
-    <textarea id="textarea{{i}}" (keyup)="ResizeTextArea(i)" placeholder="{{noteFrame.Data.Title}}" rows="3" [(ngModel)]="noteFrame.Data.Content"></textarea>
+    <textarea id="textarea{{i}}" (keydown)="ResizeTextArea(i)" (keyup)="ResizeTextArea(i)" placeholder="{{noteFrame.Data.Title}}" rows="3" [(ngModel)]="noteFrame.Data.Content"></textarea>
 </div>

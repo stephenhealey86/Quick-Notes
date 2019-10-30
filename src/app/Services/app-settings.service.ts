@@ -6,7 +6,7 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class AppSettingsService {
-  private Notes: NoteFrame[] = [];
+  Notes: NoteFrame[] = [];
 
 constructor() {
   this.getNoteFrames();

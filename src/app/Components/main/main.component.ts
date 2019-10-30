@@ -11,10 +11,7 @@ export class MainComponent implements OnInit {
 
   constructor(private settings: AppSettingsService) { }
 
-  Notes: NoteFrame[] = [];
-
   ngOnInit() {
-    this.Notes = this.settings.getNoteFrames();
     window.onload = () => {this.SetAbsolutePositions(); };
   }
 
@@ -42,34 +39,9 @@ export class MainComponent implements OnInit {
     element.style.height = `${height}px`;
   }
 
-  InitNotes() {
-    this.Notes.push({
-      Data: {
-        Title: '',
-        Content: '',
-        Priority: 0,
-      },
-      X: 100,
-      Y: 100,
-      Draggable: false,
-      ZIndex: 0
-    } as NoteFrame);
-    this.Notes.push({
-      Data: {
-        Title: '',
-        Content: '',
-        Priority: 0
-      },
-      X: 0,
-      Y: 0,
-      Draggable: false,
-      ZIndex: 0
-    } as NoteFrame);
-  }
-
   SetAbsolutePositions() {
     const noteFrames = document.getElementsByClassName('NoteFrame');
-    this.Notes.forEach((note, index) => {
+    this.settings.Notes.forEach((note, index) => {
       if (note.X > 0 || note.Y > 0) {
         const div = noteFrames[index] as HTMLDivElement;
         div.style.position = 'absolute';
@@ -80,10 +52,10 @@ export class MainComponent implements OnInit {
   }
 
   DeleteNote(note: NoteFrame) {
-    const index = this.Notes.indexOf(note, 0);
-    this.Notes.splice(index, 1);
-    if (this.Notes.length === 0) {
-      this.InitNotes();
+    const index = this.settings.Notes.indexOf(note, 0);
+    this.settings.Notes.splice(index, 1);
+    if (this.settings.Notes.length === 0) {
+      this.settings.addNewNote();
     }
   }
 
@@ -99,7 +71,7 @@ export class MainComponent implements OnInit {
     const element = e.target as HTMLElement;
     const div = element.closest('.NoteFrame') as HTMLElement;
 
-    const zindex = this.Notes.map((n) => n.ZIndex).sort((a, b) => b - a)[0];
+    const zindex = this.settings.Notes.map((n) => n.ZIndex).sort((a, b) => b - a)[0];
     note.ZIndex = zindex + 1;
 
     div.style.zIndex = note.ZIndex.toString();
