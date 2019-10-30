@@ -1,0 +1,14 @@
+<nav [ngClass]="{'side-bar-collapsed': sideBarCollapsed, 'BottomLeftCornerRounded': !WindowState}" class="side-bar d-flex flex-column">
+  <div class="d-flex flex-column side-bar-header">
+      <button (click)="ToggleSideBar()" class="btn-nav-bar align-self-end">
+          <i class="fas fa-bars"></i>
+      </button>
+  </div>
+  <hr>
+  <span>
+      <p>Test 1</p>
+      <p>Test 2</p>
+      <p>Test 3</p>
+      <p>Test 4</p>
+  </span>
+</nav>

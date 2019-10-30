@@ -5,7 +5,7 @@
         </button>
         <input placeholder="Title" (keydown)="KeyPressed($event, i)" class="flex-grow-1" type="text" [(ngModel)]="noteFrame.Data.Title">
         <button (click)="NotePriorityChanged(noteFrame.Data)" class="btn-windows">
-                <i *ngIf="noteFrame.Data.Priority == 0 || noteFrame.Data.Priority == null" style="opacity: 0.5;" class="fas fa-exclamation-circle"></i>
+                <i *ngIf="noteFrame.Data.Priority == 0 || noteFrame.Data.Priority == null" style="opacity: 0.6;" class="fas fa-exclamation-circle"></i>
                 <i *ngIf="noteFrame.Data.Priority == 1" style="color: orange;" class="fas fa-exclamation-circle"></i>
                 <i *ngIf="noteFrame.Data.Priority == 2" style="color: orangered;" class="fas fa-exclamation-circle"></i>
                 <i *ngIf="noteFrame.Data.Priority == 3" style="color: green;" class="fas fa-check-circle"></i>

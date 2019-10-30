@@ -8,12 +8,14 @@ import { NgxElectronModule } from 'ngx-electron';
 import { MainComponent } from './Components/main/main.component';
 import { FormsModule } from '@angular/forms';
 import { AppSettingsService } from './Services/app-settings.service';
+import { SideBarComponent } from './Components/side-bar/side-bar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     TitleBarComponent,
-    MainComponent
+    MainComponent,
+    SideBarComponent
   ],
   imports: [
     BrowserModule,

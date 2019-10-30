@@ -1,4 +1,8 @@
 div {
-    background-color: #e6f2ff;
+    background-color: transparent;
     height: 100%;
+}
+
+.window-frame {
+    background-color: var(--md-primary-foreground);
 }

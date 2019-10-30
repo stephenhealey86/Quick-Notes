@@ -6,24 +6,25 @@ textarea {
     border: none;
     box-shadow: none;
     padding: 0 5px 5px 5px;
-    color: #888888;
-    background-image: linear-gradient(to right, white 5px, transparent 5px), linear-gradient(to left, white 5px, transparent 5px), linear-gradient(white 30px, #ccc 30px, #ccc 31px, white 31px);
+    color: #000000;
+    background-image: linear-gradient(to right, #faff66 5px, transparent 5px), linear-gradient(to left, #faff66 5px, transparent 5px), linear-gradient(#faff66 30px, #BBB 30px, #BBB 31px, white 31px);
     background-size: 100% 100%, 100% 100%, 100% 31px;
     line-height: 31px;
 }
 
 input[type=text] {
     font-size: 0.75em;
-    color: #880088;
+    color: var(--md-primary-background);
     padding: 0 5px;
     border: none;
     border-radius: 10px 10px 0 0;
     outline: none;
     box-shadow: none;
+    background: transparent;
 }
 
 .note-input {
-    background-color: white;
+    
 }
 
 .NoteFrame {
@@ -32,10 +33,11 @@ input[type=text] {
     overflow: auto;
     border-radius: 10px;
     box-shadow: 0 0 15px -8px;
+    background-color: #faff66;
 }
 
 .btn-drag {
-    color: #d9d9d9;
+    color: #BBBBBB;
     -webkit-app-region: no-drag;
     padding: 0;
     margin: 0 5px;
@@ -46,7 +48,7 @@ input[type=text] {
 }
 
 .btn-draggable {
-    color: #cccccc;
+    color: #AAAAAA;
     transform: scale(1.2);
     -webkit-app-region: no-drag;
     padding: 0;

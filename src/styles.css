@@ -1,4 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
+:root {
+    --md-primary-background: #6200EE;
+    --md-primary-dark-background: #3700B3;
+    --md-primary-foreground: #FFFFFF;
+}
+
 html {
     height: 100%;
     background-color: transparent;
@@ -19,12 +25,20 @@ app-root {
     border-radius: 25px;
 }
 
+.BottomLeftCornerRounded {
+    border-radius: 0 0 0 25px;
+}
+
+.BottomCornersRounded {
+    border-radius: 0 0 25px 25px;
+}
+
 .TopCornersRounded {
     border-radius: 25px 25px 0 0;
 }
 
 .btn-windows, .btn-windows:focus, .btn-windows-close, .btn-windows-close:focus {
-    color: #d9d9d9;
+    color: #BBBBBB;
     -webkit-app-region: no-drag;
     padding: 0;
     margin: 0 5px;
@@ -35,7 +49,7 @@ app-root {
 }
 
 .btn-windows:hover {
-    color: #cccccc;
+    color: #AAAAAA;
     position: relative;
     top: -1.5px;
     left: -1px;

@@ -14,7 +14,6 @@ export class MainComponent implements OnInit {
   Notes: NoteFrame[] = [];
 
   ngOnInit() {
-    // this.InitNotes();
     this.Notes = this.settings.getNoteFrames();
     window.onload = () => {this.SetAbsolutePositions(); };
   }
