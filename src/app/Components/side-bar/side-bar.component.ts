@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { AppSettingsService } from 'src/app/Services/app-settings.service';
 
 @Component({
   selector: 'app-side-bar',
@@ -11,13 +12,17 @@ export class SideBarComponent implements OnInit {
 
   @Input() WindowState: boolean;
 
-  constructor() { }
+  constructor(private Settings: AppSettingsService) { }
 
   ngOnInit() {
   }
 
   ToggleSideBar() {
     this.sideBarCollapsed = !this.sideBarCollapsed;
+  }
+
+  AddNewNote() {
+    this.Settings.addNewNote();
   }
 
 }

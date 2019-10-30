@@ -23,10 +23,6 @@ input[type=text] {
     background: transparent;
 }
 
-.note-input {
-    
-}
-
 .NoteFrame {
     resize: horizontal;
     min-width: 300px;

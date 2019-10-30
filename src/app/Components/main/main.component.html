@@ -1,4 +1,4 @@
-<div (mousedown)="BringToFront($event, noteFrame)" class="NoteFrame d-flex flex-column" style="margin: 20px;" *ngFor="let noteFrame of settings.Notes; let i = index">
+<div (mousedown)="BringToFront($event, noteFrame)" class="NoteFrame d-flex flex-column" style="margin: 20px;" *ngFor="let noteFrame of Settings.Notes; let i = index">
     <span class="note-input d-flex justify-content-between">
         <button (mouseleave)="MouseUp(noteFrame)" (mouseup)="MouseUp(noteFrame)" (mousemove)="MouseMove($event, noteFrame)" (mousedown)="MouseDown(noteFrame)" [ngClass]="{'btn-draggable': noteFrame.Draggable}" class="btn-drag">
             <i class="fas fa-arrows-alt"></i>
