@@ -55,6 +55,9 @@ getNoteFrames(): NoteFrame[] {
   if (environment.production) {
     // Get notes from storage
     this.Notes = this.settings.get('notes');
+    if (this.Notes === null || this.Notes === undefined) {
+      this.Notes = [] as NoteFrame[];
+    }
   } else {
     this.Notes = this.InitNotes();
   }
