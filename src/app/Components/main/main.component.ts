@@ -10,6 +10,7 @@ import { AppSettingsService } from 'src/app/Services/app-settings.service';
 export class MainComponent implements OnInit {
 
   Settings: AppSettingsService;
+  MouseIsDown = false;
 
   constructor(private settings: AppSettingsService) {
     this.Settings = settings;
@@ -29,6 +30,26 @@ export class MainComponent implements OnInit {
       const txt = document.getElementById(`textarea${index}`) as HTMLTextAreaElement;
       txt.focus();
     }
+  }
+
+  UserResizeTextArea(e: MouseEvent) {
+    // Check user resizing
+    const frame = document.getElementsByTagName('app-main')[0] as HTMLElement;
+    const limitRect = frame.getBoundingClientRect();
+    const element = e.target as HTMLElement;
+    const div = element.closest('.NoteFrame') as HTMLElement;
+    // Resizing Notes
+    if (this.MouseIsDown || true) {
+      // Mouse is down check boundries
+      if ((limitRect.right < div.getBoundingClientRect().right)) {
+        const width = limitRect.right - div.getBoundingClientRect().left - 5;
+        div.style.width = width + 'px';
+      }
+    }
+  }
+
+  ToggleMouseDown() {
+    this.MouseIsDown = !this.MouseIsDown;
   }
 
   ResizeTextArea(index: number) {
@@ -82,6 +103,7 @@ export class MainComponent implements OnInit {
   }
 
   MouseDown(note: NoteFrame) {
+    // Enable not dragging
     note.Draggable = !note.Draggable;
   }
 
@@ -101,7 +123,6 @@ export class MainComponent implements OnInit {
       const limitRect = frame.getBoundingClientRect();
       const element = e.target as HTMLElement;
       const div = element.closest('.NoteFrame') as HTMLElement;
-      const divRect = div.getBoundingClientRect();
       div.style.position = 'absolute';
       if ((limitRect.left - 20 < e.clientX - 37.5) && (limitRect.right - 20 > e.clientX - 37.5 + div.offsetWidth)) {
         note.X = e.clientX - 37.5;
