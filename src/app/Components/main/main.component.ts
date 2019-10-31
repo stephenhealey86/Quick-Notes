@@ -33,14 +33,10 @@ export class MainComponent implements OnInit {
 
   ResizeTextArea(index: number) {
     const element = document.getElementById(`textarea${index}`) as HTMLTextAreaElement;
-    const scroll = element.scrollHeight;
-    const offset = element.offsetHeight;
-    let height = (scroll - offset) + offset;
-    height = height >= 97 ? height : 97;
-    if (element.value === '') {
-      height = 97;
-    }
-    element.style.height = `${height}px`;
+    element.style.height = '0px';
+    let scroll = element.scrollHeight;
+    scroll = scroll >= 97 ? scroll : 97;
+    element.style.height = `${scroll}px`;
   }
 
   SetAbsolutePositions() {

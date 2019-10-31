@@ -21,35 +21,6 @@ constructor(private electronService: ElectronService) {
   this.getNoteFrames();
  }
 
-InitNotes(): NoteFrame[] {
-  const notes: NoteFrame[] = [];
-
-  notes.push({
-    Data: {
-      Title: '',
-      Content: '',
-      Priority: 0,
-    },
-    X: 100,
-    Y: 100,
-    Draggable: false,
-    ZIndex: 0
-  } as NoteFrame);
-  notes.push({
-    Data: {
-      Title: '',
-      Content: '',
-      Priority: 0
-    },
-    X: 0,
-    Y: 0,
-    Draggable: false,
-    ZIndex: 0
-  } as NoteFrame);
-
-  return notes;
-}
-
 getNoteFrames(): NoteFrame[] {
   // Temp get Notes
   if (environment.production) {
@@ -63,7 +34,6 @@ getNoteFrames(): NoteFrame[] {
     if (this.Notes === null || this.Notes === undefined) {
       this.Notes = [] as NoteFrame[];
     }
-    // this.Notes = this.InitNotes();
   }
   return this.Notes;
 }
