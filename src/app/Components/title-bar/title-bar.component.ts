@@ -27,9 +27,9 @@ export class TitleBarComponent implements OnInit {
   }
 
   closeWindow() {
+    // Store notes
+    this.settings.setNoteFrames();
     if (environment.production) {
-      // Store notes
-      this.settings.setNoteFrames();
       // Close window
       this.window.close();
     }

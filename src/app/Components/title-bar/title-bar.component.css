@@ -1,4 +1,16 @@
 .windows-title {
     -webkit-user-select: none;
     -webkit-app-region: drag;
+    color: var(--md-primary-background);
+    font-family: 'Indie Flower', cursive;
+    font-size: 1.5em;
+    font-weight: 700;
+}
+
+.fa-signature {
+    transform: translateY(10px) scaleY(0.5);
+}
+
+.title-span {
+    transform: translateY(5px);
 }

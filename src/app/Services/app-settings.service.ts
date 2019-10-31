@@ -59,7 +59,11 @@ getNoteFrames(): NoteFrame[] {
       this.Notes = [] as NoteFrame[];
     }
   } else {
-    this.Notes = this.InitNotes();
+    this.Notes = JSON.parse(localStorage.getItem('notes'));
+    if (this.Notes === null || this.Notes === undefined) {
+      this.Notes = [] as NoteFrame[];
+    }
+    // this.Notes = this.InitNotes();
   }
   return this.Notes;
 }
@@ -68,6 +72,8 @@ setNoteFrames() {
   if (environment.production) {
     // Store notes
     this.settings.set('notes', this.Notes);
+  } else {
+    localStorage.setItem('notes', JSON.stringify(this.Notes));
   }
 }
 

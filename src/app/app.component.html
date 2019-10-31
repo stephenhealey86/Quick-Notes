@@ -2,6 +2,6 @@
     <app-title-bar (windowState)="ChangeWindowState($event)"></app-title-bar>
     <div [ngClass]="{'BottomCornersRounded': !windowState}" class="window-frame d-flex align-items-stretch">
         <app-side-bar [WindowState]="windowState"></app-side-bar>
-        <app-main class="flex-grow-1"></app-main>
+        <app-main [ngClass]="{'BottomRightCornerRounded': !windowState}" class="flex-grow-1"></app-main>
     </div>
 </div>

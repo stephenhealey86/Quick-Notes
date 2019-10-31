@@ -20,6 +20,8 @@ hr {
 
 span {
     text-align: center;
+    font-family: 'Roboto Mono', monospace;
+    padding-top: 1rem;
 }
 
 .side-bar-collapsed {

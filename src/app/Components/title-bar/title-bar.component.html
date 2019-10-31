@@ -5,10 +5,10 @@
       <button (click)="maxWindow()" class="btn-windows"><i class="fas fa-window-restore"></i></button>
       <button (click)="closeWindow()" class="btn-windows"><i class="fas fa-window-close"></i></button>
     </span>
-    <span class="w-100 text-center">
-      <p class="m-0">QuickNotes</p>
+    <span class="title-span w-100 text-center d-flex justify-content-center">
+      <p class="m-0">Quick-Notes</p><i class="fas fa-signature"></i><i class="fas fa-pen-fancy"></i>
     </span>
-    <span class="mr-2 d-flex">
+    <span class="mr-2 mt-2 d-flex">
       <button (click)="minWindow()" class="btn-windows"><i class="fas fa-window-minimize"></i></button>
       <button (click)="maxWindow()" class="btn-windows">
         <i *ngIf="windowIsMaximised" class="fas fa-window-restore"></i>
