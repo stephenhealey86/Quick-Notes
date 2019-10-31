@@ -79,11 +79,18 @@ export class MainComponent implements OnInit {
 
   MouseMove(e: MouseEvent, note: NoteFrame) {
     if (note.Draggable) {
+      const frame = document.getElementsByTagName('app-main')[0] as HTMLElement;
+      const limitRect = frame.getBoundingClientRect();
       const element = e.target as HTMLElement;
       const div = element.closest('.NoteFrame') as HTMLElement;
+      const divRect = div.getBoundingClientRect();
       div.style.position = 'absolute';
-      note.Y = e.clientY - 37.5;
-      note.X = e.clientX - 37.5;
+      if ((limitRect.left - 20 < e.clientX - 37.5) && (limitRect.right - 20 > e.clientX - 37.5 + div.offsetWidth)) {
+        note.X = e.clientX - 37.5;
+      }
+      if ((limitRect.top - 20 < e.clientY - 37.5) && (limitRect.bottom - 20 > e.clientY - 37.5 + div.offsetHeight)) {
+        note.Y = e.clientY - 37.5;
+      }
       div.style.top = note.Y + 'px';
       div.style.left = note.X + 'px';
     }
