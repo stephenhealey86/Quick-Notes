@@ -32,11 +32,29 @@ export class MainComponent implements OnInit {
   }
 
   ResizeTextArea(index: number) {
+    // Get app-main position on page
+    const frame = document.getElementsByTagName('app-main')[0] as HTMLElement;
+    const limitRect = frame.getBoundingClientRect();
+    // Get textarea and sizes
     const element = document.getElementById(`textarea${index}`) as HTMLTextAreaElement;
+    const height = element.offsetHeight;
+    // Resize textarea
     element.style.height = '0px';
     let scroll = element.scrollHeight;
     scroll = scroll >= 97 ? scroll : 97;
     element.style.height = `${scroll}px`;
+    const bottom = element.getBoundingClientRect().bottom;
+    // Reset if out of bounds
+    if (limitRect.bottom < bottom) {
+      element.style.height = `${height}px`;
+    }
+    // Show scroll is possible
+    if (element.scrollHeight > element.offsetHeight) {
+      element.classList.add('showScroll');
+      element.scrollTo(0, element.selectionStart);
+    } else {
+      element.classList.remove('showScroll');
+    }
   }
 
   SetAbsolutePositions() {

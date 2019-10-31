@@ -56,3 +56,7 @@ input[type=text] {
     background: transparent;
     outline: none;
 }
+
+.showScroll {
+    border-left: dashed 1px red;
+}
