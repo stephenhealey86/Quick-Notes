@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { NoteFrame } from '../Models/Note';
+import { NoteFrame, NotePage } from '../Models/Note';
 import { environment } from 'src/environments/environment';
 import { ElectronService } from 'ngx-electron';
 import * as settings from 'electron-settings';
@@ -9,7 +9,15 @@ import * as settings from 'electron-settings';
 })
 export class AppSettingsService {
 
-  Notes: NoteFrame[] = [];
+  SelectedPage = 0;
+  NotesPages: NotePage[] = [];
+  // Notes: NoteFrame[] = [];
+  get Notes(): NoteFrame[] {
+    return this.NotesPages[this.SelectedPage].Data;
+  }
+  set Notes(value: NoteFrame[]) {
+    this.NotesPages[this.SelectedPage].Data = value;
+  }
   settings: typeof settings;
 
 constructor(private electronService: ElectronService) {
@@ -21,44 +29,37 @@ constructor(private electronService: ElectronService) {
   this.getNoteFrames();
  }
 
-getNoteFrames(): NoteFrame[] {
+getNoteFrames() {
   // Temp get Notes
   if (environment.production) {
     // Get notes from storage
-    this.Notes = this.settings.get('notes');
-    if (this.Notes === null || this.Notes === undefined) {
-      this.Notes = [] as NoteFrame[];
+    this.NotesPages = this.settings.get('notes');
+    if (this.NotesPages === null || this.NotesPages === undefined) {
+      this.NotesPages = [new NotePage()] as NotePage[];
     }
   } else {
-    this.Notes = JSON.parse(localStorage.getItem('notes'));
-    if (this.Notes === null || this.Notes === undefined) {
-      this.Notes = [] as NoteFrame[];
+    this.NotesPages = JSON.parse(localStorage.getItem('notes'));
+    if (this.NotesPages === null || this.NotesPages === undefined) {
+      this.NotesPages = [new NotePage()] as NotePage[];
     }
   }
-  return this.Notes;
 }
 
 setNoteFrames() {
   if (environment.production) {
     // Store notes
-    this.settings.set('notes', this.Notes);
+    this.settings.set('notes', this.NotesPages);
   } else {
-    localStorage.setItem('notes', JSON.stringify(this.Notes));
+    localStorage.setItem('notes', JSON.stringify(this.NotesPages));
   }
 }
 
 addNewNote() {
-  this.Notes.push({
-    Data: {
-      Title: '',
-      Content: '',
-      Priority: 0,
-    },
-    X: 100,
-    Y: 100,
-    Draggable: false,
-    ZIndex: 0
-  } as NoteFrame);
+  this.Notes.push(new NoteFrame());
+}
+
+addNewPage() {
+  this.NotesPages.push(new NotePage());
 }
 
 }

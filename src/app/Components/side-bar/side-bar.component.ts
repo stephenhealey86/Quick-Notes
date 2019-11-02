@@ -8,11 +8,11 @@ import { AppSettingsService } from 'src/app/Services/app-settings.service';
 })
 export class SideBarComponent implements OnInit {
 
-  sideBarCollapsed = true;
+  sideBarCollapsed = false;
 
   @Input() WindowState: boolean;
 
-  constructor(private Settings: AppSettingsService) { }
+  constructor(public Settings: AppSettingsService) { }
 
   ngOnInit() {
   }
@@ -23,6 +23,15 @@ export class SideBarComponent implements OnInit {
 
   AddNewNote() {
     this.Settings.addNewNote();
+  }
+
+  SelectPage(index: number) {
+    this.Settings.SelectedPage = index;
+    console.log(index);
+  }
+
+  AddPage() {
+    this.Settings.addNewPage();
   }
 
 }
