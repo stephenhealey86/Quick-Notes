@@ -9,13 +9,16 @@ import { MainComponent } from './Components/main/main.component';
 import { FormsModule } from '@angular/forms';
 import { AppSettingsService } from './Services/app-settings.service';
 import { SideBarComponent } from './Components/side-bar/side-bar.component';
+import { ConfirmComponent } from './Components/confirm/confirm.component';
+import { ConfirmationService } from './Services/confirmation.service';
 
 @NgModule({
   declarations: [
     AppComponent,
     TitleBarComponent,
     MainComponent,
-    SideBarComponent
+    SideBarComponent,
+    ConfirmComponent
   ],
   imports: [
     BrowserModule,
@@ -24,7 +27,8 @@ import { SideBarComponent } from './Components/side-bar/side-bar.component';
     FormsModule,
   ],
   providers: [
-    AppSettingsService
+    AppSettingsService,
+    ConfirmationService
   ],
   bootstrap: [AppComponent]
 })

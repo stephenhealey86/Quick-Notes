@@ -1,0 +1,12 @@
+<div [hidden]="!Confirm.Active" class="confirm-container">
+  <div class="confirm-offset">
+      <div class="confirm-frame">
+        <i class="fas fa-exclamation-circle"></i>
+        <h1>{{Confirm.Data.Title}}</h1>
+        <span class="d-flex justify-content-end">
+          <button class="m-2 btn-confirm">Ok</button>
+          <button class="m-2 btn-cancel">Cancel</button>
+        </span>
+      </div>
+  </div>
+</div>

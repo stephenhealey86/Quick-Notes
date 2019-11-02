@@ -3,6 +3,7 @@ import { NoteFrame, NotePage } from '../Models/Note';
 import { environment } from 'src/environments/environment';
 import { ElectronService } from 'ngx-electron';
 import * as settings from 'electron-settings';
+import { ConfirmationService } from './confirmation.service';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +21,7 @@ export class AppSettingsService {
   }
   settings: typeof settings;
 
-constructor(private electronService: ElectronService) {
+constructor(private electronService: ElectronService, private Confirmation: ConfirmationService) {
 
   if (environment.production) {
     this.settings = this.electronService.remote.require('electron-settings');
@@ -60,6 +61,14 @@ addNewNote() {
 
 addNewPage() {
   this.NotesPages.push(new NotePage());
+}
+
+deletePage() {
+  this.Confirmation.Confirm('Delete Page');
+  this.NotesPages.splice(this.SelectedPage, 1);
+  if (this.NotesPages.length === 0) {
+    this.addNewPage();
+  }
 }
 
 }

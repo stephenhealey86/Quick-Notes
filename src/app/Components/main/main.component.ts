@@ -14,7 +14,6 @@ export class MainComponent implements OnInit {
   constructor(public settings: AppSettingsService) {}
 
   ngOnInit() {
-    window.onload = () => {this.SetAbsolutePositions(); };
   }
 
   NotePriorityChanged(note: Note) {
@@ -78,18 +77,6 @@ export class MainComponent implements OnInit {
     } else {
       element.classList.remove('showScroll');
     }
-  }
-
-  SetAbsolutePositions() {
-    const noteFrames = document.getElementsByClassName('NoteFrame');
-    this.settings.Notes.forEach((note, index) => {
-      if (note.X > 0 || note.Y > 0) {
-        const div = noteFrames[index] as HTMLDivElement;
-        div.style.position = 'absolute';
-        div.style.top = note.Y + 'px';
-        div.style.left = note.X + 'px';
-      }
-    });
   }
 
   DeleteNote(note: NoteFrame) {

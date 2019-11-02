@@ -26,7 +26,7 @@ export class NoteFrame {
 
 export class NotePage {
     constructor() {
-        this.Name = 'New Page',
+        this.Name = 'Rename Me!',
         this.Data = [
             new NoteFrame()
         ];

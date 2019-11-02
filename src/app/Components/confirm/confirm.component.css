@@ -1,0 +1,57 @@
+h1 {
+    font-size: 2em;
+    font-family: 'Roboto Mono', monospace;
+}
+
+.confirm-container {
+    background-color:rgba(170, 170, 170, 0.5);
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 16001;
+}
+
+.confirm-offset {
+    position: absolute;
+    top: 25%;
+    left: 50%;
+}
+
+.confirm-frame  {
+    background-color: var(--md-primary-foreground);
+    border-top: solid 3px var(--md-primary-background);
+    position: relative;
+    top: 25%;
+    left: -50%;
+    padding: 10px;
+    height: 150px;
+    z-index: 16001;
+    border-radius: 5px;
+}
+
+.btn-confirm, .btn-cancel {
+    outline: none;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+}
+
+.btn-confirm {
+    background-color: var(--md-primary-background);
+    color: var(--md-primary-foreground);
+}
+
+.btn-confirm:hover, .btn-cancel:hover {
+    position: relative;
+    position: relative;
+    top: -1.5px;
+    left: -1px;
+}
+
+i {
+    color: var(--md-primary-background);
+    font-size: 32px;
+    margin: 10px;
+}

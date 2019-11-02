@@ -8,13 +8,14 @@ import { AppSettingsService } from 'src/app/Services/app-settings.service';
 })
 export class SideBarComponent implements OnInit {
 
-  sideBarCollapsed = false;
+  sideBarCollapsed = true;
 
   @Input() WindowState: boolean;
 
   constructor(public Settings: AppSettingsService) { }
 
   ngOnInit() {
+    this.SetAbsolutePositions();
   }
 
   ToggleSideBar() {
@@ -27,7 +28,21 @@ export class SideBarComponent implements OnInit {
 
   SelectPage(index: number) {
     this.Settings.SelectedPage = index;
-    console.log(index);
+    this.SetAbsolutePositions();
+  }
+
+  SetAbsolutePositions() {
+    setTimeout(() => {
+      const noteFrames = document.getElementsByClassName('NoteFrame');
+      this.Settings.Notes.forEach((note, index) => {
+        if (note.X > 0 || note.Y > 0) {
+          const div = noteFrames[index] as HTMLDivElement;
+          div.style.position = 'absolute';
+          div.style.top = note.Y + 'px';
+          div.style.left = note.X + 'px';
+        }
+      });
+    }, 10);
   }
 
   AddPage() {

@@ -11,7 +11,10 @@
             <input type="text" [(ngModel)]="page.Name">
         </button>
       </span>
-      <button (click)="AddPage()" class="btn-side-bar">Add Page</button>
+      <span class="d-flex">
+            <button (click)="AddPage()" class="btn-side-bar"><i class="fas fa-plus w-100"></i></button>
+            <button (click)="Settings.deletePage()" class="btn-side-bar"><i class="fas fa-trash w-100"></i></button>
+      </span>
   </span>
   <div class="d-flex flex-column">
     <button (click)="AddNewNote()" class="btn-nav-bar align-self-end">

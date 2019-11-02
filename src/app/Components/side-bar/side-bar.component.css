@@ -60,7 +60,6 @@ hr {
     text-align: center;
     background-color: var(--md-primary-background);
     -webkit-app-region: no-drag;
-    padding: 0.5rem 0;
     margin: 0;
     width: 100%;
     border: none;
@@ -71,11 +70,16 @@ hr {
     background-color: var(--md-primary-dark-background);
 }
 
-.fa-plus:hover, .fa-bars:hover {
+.fa-plus:hover, .fa-bars:hover, .fa-trash:hover {
     animation: Vibrate 250ms 2;
 }
 
+i {
+    padding: 0.5rem 0;
+}
+
 input {
+    padding: 0.5rem 0;
     outline: none;
     border: none;
     width: 100%;
