@@ -9,14 +9,12 @@
 
 .fa-signature {
     transform: translateY(10px) scaleY(0.5);
-    animation: WriteSignature 2s;
-    animation-delay: 2s;
+    animation: WriteSignature 5s;
     animation-timing-function: cubic-bezier(.55,.59,.81,.74);
 }
 
 .fa-pen-fancy {
-    animation: ShakePen 2s;
-    animation-delay: 2s;
+    animation: ShakePen 5s;
 }
 
 .title-span {
@@ -25,69 +23,94 @@
 
 /* Annimations */
 @keyframes ShakePen {
-    0% {
-        transform-origin: 10px 0;
-        transform: rotate(2deg) translateX(-30px) translateY(3px);
-    }
-
-    3% {
-        transform-origin: 10px 0;
-        transform: rotate(2deg) translateX(-30px) translateY(5px);
-    }
-
-    6% {
-        transform-origin: 10px 0;
-        transform: rotate(2deg) translateX(-30px) translateY(3px);
-    }
-  
-    10% {
-        transform-origin: 10px 0;
-        transform: rotate(-2deg) translateX(-27px);
+    0%, 20% {
+        visibility: hidden;
     }
 
     20% {
         transform-origin: 10px 0;
-        transform: rotate(2deg) translateX(-24px);
+        transform: rotate(2deg) translateX(-30px);
+    }
+
+    25% {
+        transform-origin: 10px 0;
+        transform: rotate(-2deg) translateX(-28px);
     }
 
     30% {
         transform-origin: 10px 0;
-        transform: rotate(-2deg) translateX(-21px);
+        transform: rotate(2deg) translateX(-26px);
+    }
+    
+    35% {
+        transform-origin: 10px 0;
+        transform: rotate(-2deg) translateX(-24px);
     }
 
     40% {
         transform-origin: 10px 0;
-        transform: rotate(2deg) translateX(-18px);
-    }
-    
-    50% {
-        transform-origin: 10px 0;
-        transform: rotate(-2deg) translateX(-15px);
+        transform: rotate(-2deg) translateX(-22px);
     }
 
+    45% {
+        transform-origin: 10px 0;
+        transform: rotate(2deg) translateX(-20px);
+    }
+
+    50% {
+        transform-origin: 10px 0;
+        transform: rotate(2deg) translateX(-18px);
+    }
+
+    55% {
+        transform-origin: 10px 0;
+        transform: rotate(-2deg) translateX(-16px);
+    }
     60% {
         transform-origin: 10px 0;
-        transform: translateX(-12px);
+        transform: rotate(-2deg) translateX(-14px);
+    }
+
+    65% {
+        transform-origin: 10px 0;
+        transform: rotate(2deg) translateX(-12px);
     }
 
     70% {
         transform-origin: 10px 0;
-        transform: translateX(-9px);
+        transform: rotate(2deg) translateX(-10px);
+    }
+
+    75% {
+        transform-origin: 10px 0;
+        transform: translateX(-8px);
     }
 
     80% {
         transform-origin: 10px 0;
         transform: translateX(-6px);
     }
+    85% {
+        transform-origin: 10px 0;
+        transform: translateX(-4px);
+    }
 
     90% {
         transform-origin: 10px 0;
-        transform: translateX(-3px);
+        transform: translateX(-2px);
+    }
+
+    95% {
+        transform-origin: 10px 0;
+        transform: translateX(-1px);
     }
   }
 
 @keyframes WriteSignature {
-    from {
+    0%, 20% {
+        visibility: hidden;
+    }
+    20% {
         transform: translateX(-15px) scaleX(0) translateY(10px) scaleY(0.5);
     }
 }

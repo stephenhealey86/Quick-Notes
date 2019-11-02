@@ -36,11 +36,16 @@ export class MainComponent implements OnInit {
     const element = e.target as HTMLElement;
     const div = element.closest('.NoteFrame') as HTMLElement;
     // Resizing Notes
-    if (this.MouseIsDown || true) {
+    if (this.MouseIsDown) {
       // Mouse is down check boundries
       if ((limitRect.right < div.getBoundingClientRect().right)) {
+        // Reszie width
         const width = limitRect.right - div.getBoundingClientRect().left - 5;
         div.style.width = width + 'px';
+      }
+      // If width is minWidth
+      if ((limitRect.right < div.getBoundingClientRect().right)) {
+        div.style.left = (limitRect.right - div.offsetWidth - 20) + 'px';
       }
     }
   }

@@ -25,6 +25,7 @@ input[type=text] {
 }
 
 .NoteFrame {
+    position: relative;
     resize: horizontal;
     min-width: 300px;
     overflow: auto;
@@ -32,7 +33,7 @@ input[type=text] {
     box-shadow: 0 0 15px -8px;
     background-color: #faff66;
     font-family: 'Indie Flower', cursive;
-    animation: AddNote 330ms linear;
+    animation: DropIn 330ms linear;
 }
 
 .btn-drag {
@@ -62,8 +63,12 @@ input[type=text] {
     border-left: dashed 1px red;
 }
 
+.fa-arrows-alt:hover {
+    animation: Vibrate 250ms 2;
+}
+
 /* Annimations */
-@keyframes AddNote {
+@keyframes DropIn {
     from {
         opacity: 0;
         transform: scaleY(0) translateY(-200px);

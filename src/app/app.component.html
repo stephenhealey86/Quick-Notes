@@ -1,6 +1,6 @@
-<div class="d-flex flex-column" [ngClass]="{'AllCornersRounded': !windowState}">
+<div class="open-app d-flex flex-column" [ngClass]="{'AllCornersRounded': !windowState}">
     <app-title-bar (windowState)="ChangeWindowState($event)"></app-title-bar>
-    <div [ngClass]="{'BottomCornersRounded': !windowState}" class="window-frame d-flex align-items-stretch">
+    <div [ngClass]="{'BottomCornersRounded': !windowState}" class="window-frame d-flex flex-grow-1 align-items-stretch">
         <app-side-bar [WindowState]="windowState"></app-side-bar>
         <app-main [ngClass]="{'BottomRightCornerRounded': !windowState}" class="flex-grow-1"></app-main>
     </div>

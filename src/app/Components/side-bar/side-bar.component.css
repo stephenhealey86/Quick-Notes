@@ -21,9 +21,6 @@ hr {
 }
 
 span {
-    text-align: center;
-    font-family: 'Roboto Mono', monospace;
-    padding-top: 1rem;
     transition-duration: 0.5s;
     transition-timing-function: step-end;
 }
@@ -54,4 +51,25 @@ span {
     border: none;
     background: transparent;
     outline: none;
+}
+
+.btn-side-bar, .btn-side-bar:focus {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 16px;
+    color: var(--md-primary-foreground);
+    background-color: var(--md-primary-background);
+    -webkit-app-region: no-drag;
+    padding: 0.5rem 0;
+    margin: 0;
+    width: 100%;
+    border: none;
+    outline: none;
+}
+
+.btn-side-bar:hover {
+    background-color: var(--md-primary-dark-background);
+}
+
+.fa-plus:hover, .fa-bars:hover {
+    animation: Vibrate 250ms 2;
 }

@@ -29,9 +29,15 @@ export class TitleBarComponent implements OnInit {
   closeWindow() {
     // Store notes
     this.settings.setNoteFrames();
+    // Annimate
+    const div = document.getElementsByClassName('open-app')[0] as HTMLElement;
+    div.style.transformOrigin = 'bottom left';
+    div.style.transitionDuration = '500ms';
+    div.style.transitionTimingFunction = 'linear';
+    div.style.transform = 'scale(0,0)';
     if (environment.production) {
       // Close window
-      this.window.close();
+      setTimeout(() => this.window.close(), 1000);
     }
   }
 

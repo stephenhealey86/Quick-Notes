@@ -6,3 +6,15 @@ div {
 .window-frame {
     background-color: var(--md-primary-foreground);
 }
+
+.open-app{
+    animation: GrowIn 500ms linear;
+}
+
+/* Annimations */
+@keyframes GrowIn {
+    from {
+        transform-origin: bottom left;
+        transform: scale(0,0);
+    }
+}
