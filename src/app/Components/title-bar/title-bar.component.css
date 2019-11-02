@@ -9,8 +9,85 @@
 
 .fa-signature {
     transform: translateY(10px) scaleY(0.5);
+    animation: WriteSignature 2s;
+    animation-delay: 2s;
+    animation-timing-function: cubic-bezier(.55,.59,.81,.74);
+}
+
+.fa-pen-fancy {
+    animation: ShakePen 2s;
+    animation-delay: 2s;
 }
 
 .title-span {
     transform: translateY(5px);
+}
+
+/* Annimations */
+@keyframes ShakePen {
+    0% {
+        transform-origin: 10px 0;
+        transform: rotate(2deg) translateX(-30px) translateY(3px);
+    }
+
+    3% {
+        transform-origin: 10px 0;
+        transform: rotate(2deg) translateX(-30px) translateY(5px);
+    }
+
+    6% {
+        transform-origin: 10px 0;
+        transform: rotate(2deg) translateX(-30px) translateY(3px);
+    }
+  
+    10% {
+        transform-origin: 10px 0;
+        transform: rotate(-2deg) translateX(-27px);
+    }
+
+    20% {
+        transform-origin: 10px 0;
+        transform: rotate(2deg) translateX(-24px);
+    }
+
+    30% {
+        transform-origin: 10px 0;
+        transform: rotate(-2deg) translateX(-21px);
+    }
+
+    40% {
+        transform-origin: 10px 0;
+        transform: rotate(2deg) translateX(-18px);
+    }
+    
+    50% {
+        transform-origin: 10px 0;
+        transform: rotate(-2deg) translateX(-15px);
+    }
+
+    60% {
+        transform-origin: 10px 0;
+        transform: translateX(-12px);
+    }
+
+    70% {
+        transform-origin: 10px 0;
+        transform: translateX(-9px);
+    }
+
+    80% {
+        transform-origin: 10px 0;
+        transform: translateX(-6px);
+    }
+
+    90% {
+        transform-origin: 10px 0;
+        transform: translateX(-3px);
+    }
+  }
+
+@keyframes WriteSignature {
+    from {
+        transform: translateX(-15px) scaleX(0) translateY(10px) scaleY(0.5);
+    }
 }

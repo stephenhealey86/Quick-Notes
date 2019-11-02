@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { AppSettingsService } from 'src/app/Services/app-settings.service';
 
 @Component({
@@ -8,7 +8,7 @@ import { AppSettingsService } from 'src/app/Services/app-settings.service';
 })
 export class SideBarComponent implements OnInit {
 
-  sideBarCollapsed = false;
+  sideBarCollapsed = true;
 
   @Input() WindowState: boolean;
 

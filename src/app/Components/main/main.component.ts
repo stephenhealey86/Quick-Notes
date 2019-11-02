@@ -9,12 +9,9 @@ import { AppSettingsService } from 'src/app/Services/app-settings.service';
 })
 export class MainComponent implements OnInit {
 
-  Settings: AppSettingsService;
   MouseIsDown = false;
 
-  constructor(private settings: AppSettingsService) {
-    this.Settings = settings;
-   }
+  constructor(public settings: AppSettingsService) {}
 
   ngOnInit() {
     window.onload = () => {this.SetAbsolutePositions(); };

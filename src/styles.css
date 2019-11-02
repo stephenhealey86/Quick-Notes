@@ -26,6 +26,10 @@ app-main {
     border-bottom: solid 2px #f8f9fa;
 }
 
+app-side-bar {
+    z-index: 16000;
+}
+
 .AllCornersRounded {
     border-radius: 25px;
 }

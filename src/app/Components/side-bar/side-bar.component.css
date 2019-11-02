@@ -4,6 +4,8 @@
     background-color: var(--md-primary-background);
     color: var(--md-primary-foreground);
     box-shadow: 5px 0 10px -6px var(--md-primary-background);
+    transition-duration: 0.5s;
+    transition-timing-function: ease-in-out;
 }
 
 hr {
@@ -22,18 +24,22 @@ span {
     text-align: center;
     font-family: 'Roboto Mono', monospace;
     padding-top: 1rem;
+    transition-duration: 0.5s;
+    transition-timing-function: step-end;
 }
 
 .side-bar-collapsed {
-    width: 50px;
+    width: 40px;
 }
 
 .side-bar-collapsed span, .side-bar-collapsed hr {
     visibility: hidden;
+    transition-timing-function: step-start;
 }
 
 .side-bar-collapsed .btn-nav-bar {
-    width: 100%;
+    transition-duration: 0.5s;
+    transition-timing-function: step-end;
 }
 
 .side-bar-collapsed .side-bar-header  {
