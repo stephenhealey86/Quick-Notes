@@ -60,6 +60,14 @@ export class SideBarComponent implements OnInit {
   // Adds new page
   AddPage() {
     this.Settings.addNewPage();
+    const INDEX = this.Settings.NotesPages.length - 1;
+    this.SelectPage(INDEX);
+  }
+
+  async DeletePage() {
+    await this.Settings.deletePage();
+    const INDEX = this.Settings.SelectedPage > 0 ? this.Settings.SelectedPage - 1 : 0;
+    this.SelectPage(INDEX);
   }
 
 }
