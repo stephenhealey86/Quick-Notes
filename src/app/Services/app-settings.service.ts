@@ -10,35 +10,43 @@ import { ConfirmationService } from './confirmation.service';
 })
 export class AppSettingsService {
 
+  //#region Variables
+  // Holds the selected page
   SelectedPage = 0;
+  // Store the note pages
   NotesPages: NotePage[] = [];
-  // Notes: NoteFrame[] = [];
+  // Gets the noteframes based on selected page
   get Notes(): NoteFrame[] {
     return this.NotesPages[this.SelectedPage].Data;
   }
+  // Set the noteframes based on selected page
   set Notes(value: NoteFrame[]) {
     this.NotesPages[this.SelectedPage].Data = value;
   }
+  // Electron settings
   settings: typeof settings;
 
-constructor(private electronService: ElectronService, private Confirmation: ConfirmationService) {
+constructor(private electronService: ElectronService, private confirmation: ConfirmationService) {
 
   if (environment.production) {
+    // Initialise settings if running electron
     this.settings = this.electronService.remote.require('electron-settings');
   }
 
+  // Get stored notes
   this.getNoteFrames();
  }
 
+// Gets the noted from storage
 getNoteFrames() {
-  // Temp get Notes
+  // Get notes if running electron
   if (environment.production) {
     // Get notes from storage
     this.NotesPages = this.settings.get('notes');
     if (this.NotesPages === null || this.NotesPages === undefined) {
       this.NotesPages = [new NotePage()] as NotePage[];
     }
-  } else {
+  } else { // Get notes if web app
     this.NotesPages = JSON.parse(localStorage.getItem('notes'));
     if (this.NotesPages === null || this.NotesPages === undefined) {
       this.NotesPages = [new NotePage()] as NotePage[];
@@ -46,6 +54,7 @@ getNoteFrames() {
   }
 }
 
+// Saves notes to storage
 setNoteFrames() {
   if (environment.production) {
     // Store notes
@@ -55,19 +64,25 @@ setNoteFrames() {
   }
 }
 
+// Adds a new note
 addNewNote() {
   this.Notes.push(new NoteFrame());
 }
 
+// Adds a new page
 addNewPage() {
   this.NotesPages.push(new NotePage());
 }
 
-deletePage() {
-  this.Confirmation.Confirm('Delete Page');
-  this.NotesPages.splice(this.SelectedPage, 1);
-  if (this.NotesPages.length === 0) {
-    this.addNewPage();
+// Deletes page based on user selection
+async deletePage() {
+  if (await this.confirmation.ConfirmAsyc('Delete Page')) {
+    // Delete page
+    this.NotesPages.splice(this.SelectedPage, 1);
+    // Add new page if empty
+    if (this.NotesPages.length === 0) {
+      this.addNewPage();
+    }
   }
 }
 

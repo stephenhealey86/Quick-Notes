@@ -9,118 +9,139 @@ import { AppSettingsService } from 'src/app/Services/app-settings.service';
 })
 export class MainComponent implements OnInit {
 
+  //#region Variables
+  // True when the user mouse is down
   MouseIsDown = false;
+  //#endregion
 
-  constructor(public settings: AppSettingsService) {}
+  constructor(public Settings: AppSettingsService) {}
 
   ngOnInit() {
   }
 
+  //#region Methods
+  // Increments Note.Priority variable
   NotePriorityChanged(note: Note) {
     note.Priority = note.Priority >= 3 ? 0 : note.Priority + 1;
   }
 
+  // Passes focus onto textarea from input
   KeyPressed(event: KeyboardEvent, index: number) {
     if (event.key === 'Enter' || event.key === 'Tab') {
       event.preventDefault();
-      const txt = document.getElementById(`textarea${index}`) as HTMLTextAreaElement;
-      txt.focus();
+      const TXT = document.getElementById(`textarea${index}`) as HTMLTextAreaElement;
+      TXT.focus();
     }
   }
 
+  // Prevents user froming resizing Note outside of page boundries
   UserResizeTextArea(e: MouseEvent) {
     // Check user resizing
-    const frame = document.getElementsByTagName('app-main')[0] as HTMLElement;
-    const limitRect = frame.getBoundingClientRect();
-    const element = e.target as HTMLElement;
-    const div = element.closest('.NoteFrame') as HTMLElement;
+    const FRAAME = document.getElementsByTagName('app-main')[0] as HTMLElement;
+    const LIMITRECT = FRAAME.getBoundingClientRect();
+    const ELEMENT = e.target as HTMLElement;
+    const DIV = ELEMENT.closest('.NoteFrame') as HTMLElement;
     // Resizing Notes
     if (this.MouseIsDown) {
       // Mouse is down check boundries
-      if ((limitRect.right < div.getBoundingClientRect().right)) {
+      if ((LIMITRECT.right < DIV.getBoundingClientRect().right)) {
         // Reszie width
-        const width = limitRect.right - div.getBoundingClientRect().left - 5;
-        div.style.width = width + 'px';
+        const width = LIMITRECT.right - DIV.getBoundingClientRect().left - 5;
+        DIV.style.width = width + 'px';
       }
       // If width is minWidth
-      if ((limitRect.right < div.getBoundingClientRect().right)) {
-        div.style.left = (limitRect.right - div.offsetWidth - 20) + 'px';
+      if ((LIMITRECT.right < DIV.getBoundingClientRect().right)) {
+        DIV.style.left = (LIMITRECT.right - DIV.offsetWidth - 20) + 'px';
       }
     }
   }
 
+  // Changes MouseIsDown state
   ToggleMouseDown() {
     this.MouseIsDown = !this.MouseIsDown;
   }
-
+  // Resizes the text area to suit the number of lines
   ResizeTextArea(index: number) {
     // Get app-main position on page
-    const frame = document.getElementsByTagName('app-main')[0] as HTMLElement;
-    const limitRect = frame.getBoundingClientRect();
+    const FRAME = document.getElementsByTagName('app-main')[0] as HTMLElement;
+    const LIMITRECT = FRAME.getBoundingClientRect();
     // Get textarea and sizes
-    const element = document.getElementById(`textarea${index}`) as HTMLTextAreaElement;
-    const height = element.offsetHeight;
+    const ELEMENT = document.getElementById(`textarea${index}`) as HTMLTextAreaElement;
+    const HEIGHT = ELEMENT.offsetHeight;
     // Resize textarea
-    element.style.height = '0px';
-    let scroll = element.scrollHeight;
+    ELEMENT.style.height = '0px';
+    let scroll = ELEMENT.scrollHeight;
     scroll = scroll >= 97 ? scroll : 97;
-    element.style.height = `${scroll}px`;
-    const bottom = element.getBoundingClientRect().bottom;
+    ELEMENT.style.height = `${scroll}px`;
+    const bottom = ELEMENT.getBoundingClientRect().bottom;
     // Reset if out of bounds
-    if (limitRect.bottom < bottom) {
-      element.style.height = `${height}px`;
+    if (LIMITRECT.bottom < bottom) {
+      ELEMENT.style.height = `${HEIGHT}px`;
     }
     // Show scroll is possible
-    if (element.scrollHeight > element.offsetHeight) {
-      element.classList.add('showScroll');
-      element.scrollTo(0, element.selectionStart);
+    if (ELEMENT.scrollHeight > ELEMENT.offsetHeight) {
+      ELEMENT.classList.add('showScroll');
+      ELEMENT.scrollTo(0, ELEMENT.selectionStart);
     } else {
-      element.classList.remove('showScroll');
+      ELEMENT.classList.remove('showScroll');
     }
   }
 
+  // Removes the selected note
   DeleteNote(note: NoteFrame) {
-    const index = this.settings.Notes.indexOf(note, 0);
-    this.settings.Notes.splice(index, 1);
-    if (this.settings.Notes.length === 0) {
-      this.settings.addNewNote();
+    // Get Note index
+    const INDEX = this.Settings.Notes.indexOf(note, 0);
+    // Remove note at index
+    this.Settings.Notes.splice(INDEX, 1);
+    // Add new note if no notes left
+    if (this.Settings.Notes.length === 0) {
+      this.Settings.addNewNote();
     }
   }
 
+  // Cancels note dragging
   MouseUp(note: NoteFrame) {
       note.Draggable = false;
   }
 
+  // Enables note dragging
   MouseDown(note: NoteFrame) {
-    // Enable not dragging
+    // Enable note dragging
     note.Draggable = !note.Draggable;
   }
 
+  // Sets the note with focus to front
   BringToFront(e: MouseEvent, note: NoteFrame) {
-    const element = e.target as HTMLElement;
-    const div = element.closest('.NoteFrame') as HTMLElement;
-
-    const zindex = this.settings.Notes.map((n) => n.ZIndex).sort((a, b) => b - a)[0];
-    note.ZIndex = zindex + 1;
-
-    div.style.zIndex = note.ZIndex.toString();
+    // Get element
+    const ELEMENT = e.target as HTMLElement;
+    const DIV = ELEMENT.closest('.NoteFrame') as HTMLElement;
+    // Get highest zindex
+    const ZINDEX = this.Settings.Notes.map((n) => n.ZIndex).sort((a, b) => b - a)[0];
+    note.ZIndex = ZINDEX + 1;
+    // Set new zindex
+    DIV.style.zIndex = note.ZIndex.toString();
   }
 
+  // Enables dragging of notes
   MouseMove(e: MouseEvent, note: NoteFrame) {
     if (note.Draggable) {
-      const frame = document.getElementsByTagName('app-main')[0] as HTMLElement;
-      const limitRect = frame.getBoundingClientRect();
-      const element = e.target as HTMLElement;
-      const div = element.closest('.NoteFrame') as HTMLElement;
-      div.style.position = 'absolute';
-      if ((limitRect.left - 20 < e.clientX - 37.5) && (limitRect.right - 20 > e.clientX - 37.5 + div.offsetWidth)) {
+      // Get elements
+      const FRAME = document.getElementsByTagName('app-main')[0] as HTMLElement;
+      const LIMITRECT = FRAME.getBoundingClientRect();
+      const ELEMENT = e.target as HTMLElement;
+      const DIV = ELEMENT.closest('.NoteFrame') as HTMLElement;
+      DIV.style.position = 'absolute';
+      // Check constraints
+      if ((LIMITRECT.left - 20 < e.clientX - 37.5) && (LIMITRECT.right - 20 > e.clientX - 37.5 + DIV.offsetWidth)) {
         note.X = e.clientX - 37.5;
       }
-      if ((limitRect.top - 20 < e.clientY - 37.5) && (limitRect.bottom - 20 > e.clientY - 37.5 + div.offsetHeight)) {
+      if ((LIMITRECT.top - 20 < e.clientY - 37.5) && (LIMITRECT.bottom - 20 > e.clientY - 37.5 + DIV.offsetHeight)) {
         note.Y = e.clientY - 37.5;
       }
-      div.style.top = note.Y + 'px';
-      div.style.left = note.X + 'px';
+      // Set note position
+      DIV.style.top = note.Y + 'px';
+      DIV.style.left = note.X + 'px';
     }
   }​
+  //#endregion
 }
