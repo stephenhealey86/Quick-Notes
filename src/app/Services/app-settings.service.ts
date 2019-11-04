@@ -66,13 +66,17 @@ setNoteFrames() {
 
 // Adds a new note
 addNewNote() {
+  // Create new note
   const NOTE = new NoteFrame();
+  // Get side bar
   const SIDE_BAR = document.getElementsByClassName('side-bar')[0];
+  // Offset new note if sidebar not collapsed
   if (SIDE_BAR) {
     if (!SIDE_BAR.classList.contains('side-bar-collapsed')) {
       NOTE.X += 110;
     }
   }
+  // Add new note to array
   this.Notes.push(NOTE);
 }
 
@@ -80,7 +84,12 @@ addNewNote() {
 addNewPage() {
   // Limit number of pages to 10
   if (this.NotesPages.length <= 9) {
-    this.NotesPages.push(new NotePage());
+    // Cretae new NotePage
+    const PAGE = new NotePage();
+    // Offset note as side bar will be expanded
+    PAGE.Data[0].X += 110;
+    // Add note to array
+    this.NotesPages.push(PAGE);
   }
 }
 
