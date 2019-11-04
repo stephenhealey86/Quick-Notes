@@ -66,12 +66,22 @@ setNoteFrames() {
 
 // Adds a new note
 addNewNote() {
-  this.Notes.push(new NoteFrame());
+  const NOTE = new NoteFrame();
+  const SIDE_BAR = document.getElementsByClassName('side-bar')[0];
+  if (SIDE_BAR) {
+    if (!SIDE_BAR.classList.contains('side-bar-collapsed')) {
+      NOTE.X += 110;
+    }
+  }
+  this.Notes.push(NOTE);
 }
 
 // Adds a new page
 addNewPage() {
-  this.NotesPages.push(new NotePage());
+  // Limit number of pages to 10
+  if (this.NotesPages.length <= 9) {
+    this.NotesPages.push(new NotePage());
+  }
 }
 
 // Deletes page based on user selection

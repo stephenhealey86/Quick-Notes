@@ -1,6 +1,6 @@
-<div (mousemove)="UserResizeTextArea($event)" (mouseleave)="UserResizeTextArea($event)" (mousedown)="BringToFront($event, noteFrame); ToggleMouseDown()" (mouseup)="ToggleMouseDown()" class="NoteFrame d-flex flex-column" style="margin: 20px;" *ngFor="let noteFrame of Settings.Notes; let i = index">
+<div [ngStyle]="{top: noteFrame.Y + 'px', left: noteFrame.X + 'px', margin: '20px'}" id="note{{i}}" (mousemove)="UserResizeTextArea($event)" (mouseleave)="UserResizeTextArea($event)" (mousedown)="BringToFront($event, noteFrame); ToggleMouseDown()" (mouseup)="ToggleMouseDown()" class="NoteFrame d-flex flex-column" *ngFor="let noteFrame of Settings.Notes; let i = index">
     <span class="note-input d-flex justify-content-between">
-        <button (mouseleave)="MouseUp(noteFrame)" (mouseup)="MouseUp(noteFrame)" (mousemove)="MouseMove($event, noteFrame)" (mousedown)="MouseDown(noteFrame)" [ngClass]="{'btn-draggable': noteFrame.Draggable}" class="btn-drag">
+        <button (mousedown)="SetDraggableNote(noteFrame)" [ngClass]="{'btn-draggable': noteFrame.Draggable}" class="btn-drag">
             <i class="fas fa-arrows-alt"></i>
         </button>
         <input placeholder="Title" (keydown)="KeyPressed($event, i)" class="flex-grow-1" type="text" [(ngModel)]="noteFrame.Data.Title">

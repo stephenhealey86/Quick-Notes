@@ -12,11 +12,15 @@ export class MainComponent implements OnInit {
   //#region Variables
   // True when the user mouse is down
   MouseIsDown = false;
+  // Note for dragging
+  NoteToDrag: NoteFrame;
   //#endregion
 
   constructor(public Settings: AppSettingsService) {}
 
   ngOnInit() {
+    document.onmouseup = () => this.MouseUp();
+    document.onmousemove = (e) => this.MouseMove(e);
   }
 
   //#region Methods
@@ -100,8 +104,12 @@ export class MainComponent implements OnInit {
   }
 
   // Cancels note dragging
-  MouseUp(note: NoteFrame) {
-      note.Draggable = false;
+  MouseUp() {
+    // Clear place holder note if exists
+    if (this.NoteToDrag) {
+      this.NoteToDrag.Draggable = false;
+      this.NoteToDrag = null;
+    }
   }
 
   // Enables note dragging
@@ -122,25 +130,33 @@ export class MainComponent implements OnInit {
     DIV.style.zIndex = note.ZIndex.toString();
   }
 
+  SetDraggableNote(note: NoteFrame) {
+    this.NoteToDrag = note;
+    this.MouseDown(note);
+  }
+
   // Enables dragging of notes
-  MouseMove(e: MouseEvent, note: NoteFrame) {
-    if (note.Draggable) {
-      // Get elements
-      const FRAME = document.getElementsByTagName('app-main')[0] as HTMLElement;
-      const LIMITRECT = FRAME.getBoundingClientRect();
-      const ELEMENT = e.target as HTMLElement;
-      const DIV = ELEMENT.closest('.NoteFrame') as HTMLElement;
-      DIV.style.position = 'absolute';
-      // Check constraints
-      if ((LIMITRECT.left - 20 < e.clientX - 37.5) && (LIMITRECT.right - 20 > e.clientX - 37.5 + DIV.offsetWidth)) {
-        note.X = e.clientX - 37.5;
+  MouseMove(e: MouseEvent) {
+    if (this.NoteToDrag) {
+      if (this.NoteToDrag.Draggable) {
+        // Get elements
+        const FRAME = document.getElementsByTagName('app-main')[0] as HTMLElement;
+        const LIMITRECT = FRAME.getBoundingClientRect();
+        // Get index
+        const INDEX = this.Settings.Notes.indexOf(this.NoteToDrag);
+        const DIV = document.getElementById(`note${INDEX}`) as HTMLElement;
+        DIV.style.position = 'absolute';
+        // Check constraints
+        if ((LIMITRECT.left - 20 < e.clientX - 37.5) && (LIMITRECT.right - 20 > e.clientX - 37.5 + DIV.offsetWidth)) {
+          this.NoteToDrag.X = e.clientX - 37.5;
+        }
+        if ((LIMITRECT.top - 20 < e.clientY - 37.5) && (LIMITRECT.bottom - 20 > e.clientY - 37.5 + DIV.offsetHeight)) {
+          this.NoteToDrag.Y = e.clientY - 37.5;
+        }
+        // Set note position
+        DIV.style.top = this.NoteToDrag.Y + 'px';
+        DIV.style.left = this.NoteToDrag.X + 'px';
       }
-      if ((LIMITRECT.top - 20 < e.clientY - 37.5) && (LIMITRECT.bottom - 20 > e.clientY - 37.5 + DIV.offsetHeight)) {
-        note.Y = e.clientY - 37.5;
-      }
-      // Set note position
-      DIV.style.top = note.Y + 'px';
-      DIV.style.left = note.X + 'px';
     }
   }​
   //#endregion

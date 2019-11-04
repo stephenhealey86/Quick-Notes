@@ -18,8 +18,6 @@ export class SideBarComponent implements OnInit {
   constructor(public Settings: AppSettingsService) { }
 
   ngOnInit() {
-    // Set the notes positons if they have been moved
-    this.SetAbsolutePositions();
   }
 
   // Toggles the side bar collapsed feature
@@ -36,25 +34,6 @@ export class SideBarComponent implements OnInit {
   SelectPage(index: number) {
     // Set page
     this.Settings.SelectedPage = index;
-    // Update positions
-    this.SetAbsolutePositions();
-  }
-
-  // Sets the notes postions if they have been moved
-  SetAbsolutePositions() {
-    setTimeout(() => {
-      // Get note elements
-      const NOTE_FRAMES = document.getElementsByClassName('NoteFrame');
-      this.Settings.Notes.forEach((note, index) => {
-        if (note.X > 0 || note.Y > 0) {
-          // Set positions
-          const DIV = NOTE_FRAMES[index] as HTMLDivElement;
-          DIV.style.position = 'absolute';
-          DIV.style.top = note.Y + 'px';
-          DIV.style.left = note.X + 'px';
-        }
-      });
-    }, 10);
   }
 
   // Adds new page

@@ -12,8 +12,8 @@ export class Note {
 export class NoteFrame {
     constructor() {
         this.Data = new Note();
-        this.X = 0;
-        this.Y = 0;
+        this.X = 45;
+        this.Y = 50;
         this.Draggable = false;
         this.ZIndex = 0;
     }
