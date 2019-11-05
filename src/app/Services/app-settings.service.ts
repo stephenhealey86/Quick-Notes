@@ -42,7 +42,7 @@ getNoteFrames() {
   // Get notes if running electron
   if (environment.production) {
     // Get notes from storage
-    this.NotesPages = this.settings.get('notes');
+    this.NotesPages = JSON.parse(this.settings.get('notes')) as NotePage[];
     if (this.NotesPages === null || this.NotesPages === undefined) {
       this.NotesPages = [new NotePage()] as NotePage[];
     }
@@ -58,7 +58,7 @@ getNoteFrames() {
 setNoteFrames() {
   if (environment.production) {
     // Store notes
-    this.settings.set('notes', this.NotesPages);
+    this.settings.set('notes', JSON.stringify(this.NotesPages));
   } else {
     localStorage.setItem('notes', JSON.stringify(this.NotesPages));
   }

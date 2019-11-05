@@ -30,7 +30,7 @@ export class SideBarComponent implements OnInit {
     this.Settings.addNewNote();
   }
 
-  // Selects the page, updates new notes positions
+  // Selects the page
   SelectPage(index: number) {
     // Set page
     this.Settings.SelectedPage = index;
