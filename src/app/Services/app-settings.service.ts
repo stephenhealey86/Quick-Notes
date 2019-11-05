@@ -80,6 +80,18 @@ addNewNote() {
   this.Notes.push(NOTE);
 }
 
+// Removes the selected note
+deleteNote(note: NoteFrame) {
+  // Get Note index
+  const INDEX = this.Notes.indexOf(note, 0);
+  // Remove note at index
+  this.Notes.splice(INDEX, 1);
+  // Add new note if no notes left
+  if (this.Notes.length === 0) {
+    this.addNewNote();
+  }
+}
+
 // Adds a new page
 addNewPage() {
   // Limit number of pages to 10

@@ -93,14 +93,7 @@ export class MainComponent implements OnInit {
 
   // Removes the selected note
   DeleteNote(note: NoteFrame) {
-    // Get Note index
-    const INDEX = this.Settings.Notes.indexOf(note, 0);
-    // Remove note at index
-    this.Settings.Notes.splice(INDEX, 1);
-    // Add new note if no notes left
-    if (this.Settings.Notes.length === 0) {
-      this.Settings.addNewNote();
-    }
+    this.Settings.deleteNote(note);
   }
 
   // Cancels note dragging
