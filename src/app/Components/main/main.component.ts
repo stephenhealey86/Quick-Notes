@@ -159,7 +159,7 @@ export class MainComponent implements OnInit {
     if (note.BulletPoints) {
       const TXTBOX = document.getElementById(`textarea${index}`) as HTMLTextAreaElement;
       const TXT = TXTBOX.value;
-      TXTBOX.value = TXT + '\t\u2022';
+      TXTBOX.value = TXT + '\t\u2022 ';
     }
   }
 
@@ -169,7 +169,7 @@ export class MainComponent implements OnInit {
       event.preventDefault();
       const TXTBOX = document.getElementById(`textarea${index}`) as HTMLTextAreaElement;
       const TXT = TXTBOX.value;
-      TXTBOX.value = TXT + '\n\t\u2022';
+      TXTBOX.value = TXT + '\n\t\u2022 ';
     } else if (event.key === 'Tab') {
       event.preventDefault();
       const TXTBOX = document.getElementById(`textarea${index}`) as HTMLTextAreaElement;
