@@ -1,4 +1,9 @@
-const { app, BrowserWindow } = require('electron')
+const { app, BrowserWindow } = require('electron');
+const path = require('path');
+const electron = require('electron');
+const nativeImage = electron.nativeImage;
+
+const appIcon = nativeImage.createFromPath(path.join(__dirname, '/src/assets/quick-notes-icon.ico'));
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -14,6 +19,7 @@ function createWindow () {
     maximizable: false,
     transparent: true,
     frame: false,
+    icon: appIcon,
     webPreferences: {
       devTools: false,
       nodeIntegration: true,
