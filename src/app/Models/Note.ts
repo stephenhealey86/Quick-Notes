@@ -3,10 +3,12 @@ export class Note {
         this.Title = '';
         this.Content = '';
         this.Priority = Priority.Low;
+        this.BulletPoints = false;
     }
     Title: string;
     Content: string;
     Priority: Priority;
+    BulletPoints: boolean;
 }
 
 export class NoteFrame {

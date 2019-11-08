@@ -1,6 +1,6 @@
 <nav [ngClass]="{'side-bar-collapsed': sideBarCollapsed, 'BottomLeftCornerRounded': !WindowState}" class="side-bar d-flex flex-column">
   <div class="d-flex flex-column side-bar-header">
-      <button (click)="ToggleSideBar()" class="btn-nav-bar align-self-end">
+      <button tooltip="Toggle side bar." [delay]="1000" placement="right" (click)="ToggleSideBar()" class="btn-nav-bar align-self-end">
           <i class="fas fa-bars"></i>
       </button>
   </div>
@@ -12,12 +12,12 @@
         </button>
       </span>
       <span class="d-flex">
-            <button (click)="AddPage()" class="btn-side-bar"><i class="fas fa-plus w-100"></i></button>
-            <button (click)="DeletePage()" class="btn-side-bar"><i class="fas fa-trash w-100"></i></button>
+            <button tooltip="Add new page." [delay]="1000" placement="bottom" (click)="AddPage()" class="btn-side-bar"><i class="fas fa-plus w-100"></i></button>
+            <button tooltip="Delete current page." [delay]="1000" placement="bottom" (click)="DeletePage()" class="btn-side-bar"><i class="fas fa-trash w-100"></i></button>
       </span>
   </span>
   <div class="d-flex flex-column">
-    <button (click)="AddNewNote()" class="btn-nav-bar align-self-end">
+    <button tooltip="Add new note." [delay]="1000" placement="right" (click)="AddNewNote()" class="btn-nav-bar align-self-end">
         <i class="fas fa-plus"></i>
     </button>
 </div>

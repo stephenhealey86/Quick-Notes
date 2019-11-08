@@ -152,5 +152,25 @@ export class MainComponent implements OnInit {
       }
     }
   }​
+
+  // Toggles the Note bullet point boolean
+  ToggleBulletPoints(note: Note) {
+    note.BulletPoints = !note.BulletPoints;
+  }
+
+  // Goto textarea newline and add bullet point
+  AddBulletPoint(event: KeyboardEvent, index: number, note: Note) {
+    if (event.key === 'Enter' && note.BulletPoints) {
+      event.preventDefault();
+      const TXTBOX = document.getElementById(`textarea${index}`) as HTMLTextAreaElement;
+      const TXT = TXTBOX.value;
+      TXTBOX.value = TXT + '\n\t\u2022';
+    } else if (event.key === 'Tab') {
+      event.preventDefault();
+      const TXTBOX = document.getElementById(`textarea${index}`) as HTMLTextAreaElement;
+      const TXT = TXTBOX.value;
+      TXTBOX.value = TXT + '\t';
+    }
+  }
   //#endregion
 }

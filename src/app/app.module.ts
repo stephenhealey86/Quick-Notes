@@ -11,6 +11,7 @@ import { AppSettingsService } from './Services/app-settings.service';
 import { SideBarComponent } from './Components/side-bar/side-bar.component';
 import { ConfirmComponent } from './Components/confirm/confirm.component';
 import { ConfirmationService } from './Services/confirmation.service';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { ConfirmationService } from './Services/confirmation.service';
     AppRoutingModule,
     NgxElectronModule,
     FormsModule,
+    TooltipModule.forRoot(),
   ],
   providers: [
     AppSettingsService,

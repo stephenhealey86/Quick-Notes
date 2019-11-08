@@ -1,16 +1,25 @@
 <div [ngStyle]="{top: noteFrame.Y + 'px', left: noteFrame.X + 'px', margin: '20px'}" id="note{{i}}" (mousemove)="UserResizeTextArea($event)" (mouseleave)="UserResizeTextArea($event)" (mousedown)="BringToFront($event, noteFrame); ToggleMouseDown()" (mouseup)="ToggleMouseDown()" class="NoteFrame d-flex flex-column" *ngFor="let noteFrame of Settings.Notes; let i = index">
     <span class="note-input d-flex justify-content-between">
+        <!-- Drag -->
         <button (mousedown)="SetDraggableNote(noteFrame)" [ngClass]="{'btn-draggable': noteFrame.Draggable}" class="btn-drag">
             <i class="fas fa-arrows-alt"></i>
         </button>
+        <!-- Title -->
         <input placeholder="Title" (keydown)="KeyPressed($event, i)" class="flex-grow-1" type="text" [(ngModel)]="noteFrame.Data.Title">
-        <button (click)="NotePriorityChanged(noteFrame.Data)" class="btn-windows">
+        <!-- Bullet points -->
+        <button (click)="ToggleBulletPoints(noteFrame.Data)" tooltip="Bullet points." [delay]="1000" placement="bottom" [ngStyle]="{'font-size': '20px'}" class="btn-windows">
+            <i *ngIf="!noteFrame.Data.BulletPoints" class="fas fa-ellipsis-v"></i>
+            <i *ngIf="noteFrame.Data.BulletPoints" style="color: var(--md-primary-background);" class="fas fa-ellipsis-v"></i>
+        </button>
+        <!-- Priority -->
+        <button tooltip="Priority." [delay]="1000" placement="bottom" (click)="NotePriorityChanged(noteFrame.Data)" class="btn-windows">
                 <i *ngIf="noteFrame.Data.Priority == 0 || noteFrame.Data.Priority == null" style="opacity: 0.6;" class="fas fa-exclamation-circle"></i>
                 <i *ngIf="noteFrame.Data.Priority == 1" style="color: orange;" class="fas fa-exclamation-circle"></i>
                 <i *ngIf="noteFrame.Data.Priority == 2" style="color: orangered;" class="fas fa-exclamation-circle"></i>
                 <i *ngIf="noteFrame.Data.Priority == 3" style="color: green;" class="fas fa-check-circle"></i>
         </button>
-        <button (click)="DeleteNote(noteFrame)" class="btn-windows-close"><i class="fas fa-times-circle"></i></button>
+        <!-- Delete -->
+        <button tooltip="Delete note." [delay]="1000" placement="bottom" (click)="DeleteNote(noteFrame)" class="btn-windows-close"><i class="fas fa-times-circle"></i></button>
     </span>
-    <textarea id="textarea{{i}}" (keydown)="ResizeTextArea(i)" (keyup)="ResizeTextArea(i)" placeholder="{{noteFrame.Data.Title}}" rows="3" [(ngModel)]="noteFrame.Data.Content"></textarea>
+    <textarea id="textarea{{i}}" (keydown)="ResizeTextArea(i); AddBulletPoint($event, i, noteFrame.Data)" (keyup)="ResizeTextArea(i)" placeholder="{{noteFrame.Data.Title}}" rows="3" [(ngModel)]="noteFrame.Data.Content"></textarea>
 </div>
