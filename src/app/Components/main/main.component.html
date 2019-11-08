@@ -7,7 +7,7 @@
         <!-- Title -->
         <input placeholder="Title" (keydown)="KeyPressed($event, i)" class="flex-grow-1" type="text" [(ngModel)]="noteFrame.Data.Title">
         <!-- Bullet points -->
-        <button (click)="ToggleBulletPoints(noteFrame.Data)" tooltip="Bullet points." [delay]="1000" placement="bottom" [ngStyle]="{'font-size': '20px'}" class="btn-windows">
+        <button (click)="ToggleBulletPoints(noteFrame.Data, i)" tooltip="Bullet points." [delay]="1000" placement="bottom" [ngStyle]="{'font-size': '20px'}" class="btn-windows">
             <i *ngIf="!noteFrame.Data.BulletPoints" class="fas fa-ellipsis-v"></i>
             <i *ngIf="noteFrame.Data.BulletPoints" style="color: var(--md-primary-background);" class="fas fa-ellipsis-v"></i>
         </button>

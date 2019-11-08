@@ -154,8 +154,13 @@ export class MainComponent implements OnInit {
   }​
 
   // Toggles the Note bullet point boolean
-  ToggleBulletPoints(note: Note) {
+  ToggleBulletPoints(note: Note, index: number) {
     note.BulletPoints = !note.BulletPoints;
+    if (note.BulletPoints) {
+      const TXTBOX = document.getElementById(`textarea${index}`) as HTMLTextAreaElement;
+      const TXT = TXTBOX.value;
+      TXTBOX.value = TXT + '\t\u2022';
+    }
   }
 
   // Goto textarea newline and add bullet point
