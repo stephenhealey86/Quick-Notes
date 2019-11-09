@@ -12,11 +12,11 @@
             <i *ngIf="noteFrame.Data.BulletPoints" style="color: var(--md-primary-background);" class="fas fa-ellipsis-v"></i>
         </button>
         <!-- Priority -->
-        <button tooltip="Priority." [delay]="1000" placement="bottom" (click)="NotePriorityChanged(noteFrame.Data)" class="btn-windows">
-                <i *ngIf="noteFrame.Data.Priority == 0 || noteFrame.Data.Priority == null" style="opacity: 0.6;" class="fas fa-exclamation-circle"></i>
-                <i *ngIf="noteFrame.Data.Priority == 1" style="color: orange;" class="fas fa-exclamation-circle"></i>
-                <i *ngIf="noteFrame.Data.Priority == 2" style="color: orangered;" class="fas fa-exclamation-circle"></i>
-                <i *ngIf="noteFrame.Data.Priority == 3" style="color: green;" class="fas fa-check-circle"></i>
+        <button (click)="NotePriorityChanged(noteFrame.Data)" class="btn-windows">
+                <i tooltip="Priority." [delay]="1000" placement="bottom" *ngIf="noteFrame.Data.Priority == 0 || noteFrame.Data.Priority == null" style="opacity: 0.6;" class="fas fa-exclamation-circle"></i>
+                <i tooltip="Important." [delay]="1000" placement="bottom" *ngIf="noteFrame.Data.Priority == 1" style="color: orange;" class="fas fa-exclamation-circle"></i>
+                <i tooltip="Urgent." [delay]="1000" placement="bottom" *ngIf="noteFrame.Data.Priority == 2" style="color: orangered;" class="fas fa-exclamation-circle"></i>
+                <i tooltip="Completed." [delay]="1000" placement="bottom" *ngIf="noteFrame.Data.Priority == 3" style="color: green;" class="fas fa-check-circle"></i>
         </button>
         <!-- Delete -->
         <button tooltip="Delete note." [delay]="1000" placement="bottom" (click)="DeleteNote(noteFrame)" class="btn-windows-close"><i class="fas fa-times-circle"></i></button>
