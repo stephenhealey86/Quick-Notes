@@ -34,7 +34,11 @@ export class SideBarComponent implements OnInit {
   // Selects the page
   SelectPage(index: number) {
     // Set page
-    this.Settings.SelectedPage = index;
+    const ELEMENT = document.getElementById(`pageName${index}`) as HTMLTextAreaElement;
+    if (ELEMENT && ELEMENT.value === 'Rename Me!') {
+      ELEMENT.setSelectionRange(0, ELEMENT.value.length);
+    }
+    this.Settings.selectPage(index);
   }
 
   // Adds new page

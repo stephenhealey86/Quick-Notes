@@ -4,6 +4,7 @@ import { environment } from 'src/environments/environment';
 import { ElectronService } from 'ngx-electron';
 import * as settings from 'electron-settings';
 import { ConfirmationService } from './confirmation.service';
+import { SettingsModel } from '../Models/SettingsModel';
 
 @Injectable({
   providedIn: 'root'
@@ -42,25 +43,68 @@ getNoteFrames() {
   // Get notes if running electron
   if (environment.production) {
     // Get notes from storage
-    this.NotesPages = JSON.parse(this.settings.get('notes')) as NotePage[];
-    if (this.NotesPages === null || this.NotesPages === undefined) {
+    if (this.settings.has('settings')) {
+      const SETTINGS = JSON.parse(this.settings.get('settings')) as SettingsModel;
+      this.NotesPages = SETTINGS.Data;
+      this.SelectedPage = SETTINGS.LastPage >= 0 ? SETTINGS.LastPage : 0;
+    } else {
       this.NotesPages = [new NotePage()] as NotePage[];
     }
   } else { // Get notes if web app
-    this.NotesPages = JSON.parse(localStorage.getItem('notes'));
-    if (this.NotesPages === null || this.NotesPages === undefined) {
+    const SETTINGS  = JSON.parse(localStorage.getItem('settings'));
+    if (SETTINGS === null || SETTINGS === undefined) {
       this.NotesPages = [new NotePage()] as NotePage[];
+    } else {
+      this.NotesPages = SETTINGS.Data;
+      this.SelectedPage = SETTINGS.LastPage >= 0 ? SETTINGS.LastPage : 0;
     }
+  }
+}
+
+selectPage(index: number) {
+  this.SelectedPage = index;
+  setTimeout(() => {
+    this.Notes.forEach((e, i) => {
+      this.ResizeTextArea(i);
+    });
+  }, 20);
+}
+
+// Resizes the text area to suit the number of lines
+ResizeTextArea(index: number) {
+  // Get app-main position on page
+  const FRAME = document.getElementsByTagName('app-main')[0] as HTMLElement;
+  const LIMITRECT = FRAME.getBoundingClientRect();
+  // Get textarea and sizes
+  const ELEMENT = document.getElementById(`textarea${index}`) as HTMLTextAreaElement;
+  const HEIGHT = ELEMENT.offsetHeight;
+  // Resize textarea
+  ELEMENT.style.height = '0px';
+  let scroll = ELEMENT.scrollHeight;
+  scroll = scroll >= 97 ? scroll : 97;
+  ELEMENT.style.height = `${scroll}px`;
+  const bottom = ELEMENT.getBoundingClientRect().bottom;
+  // Reset if out of bounds
+  if (LIMITRECT.bottom < bottom) {
+    ELEMENT.style.height = `${HEIGHT}px`;
+  }
+  // Show scroll is possible
+  if (ELEMENT.scrollHeight > ELEMENT.offsetHeight) {
+    ELEMENT.classList.add('showScroll');
+    ELEMENT.scrollTo(0, ELEMENT.selectionStart);
+  } else {
+    ELEMENT.classList.remove('showScroll');
   }
 }
 
 // Saves notes to storage
 setNoteFrames() {
+  const SETTINGS = new SettingsModel(this.NotesPages, this.SelectedPage);
   if (environment.production) {
     // Store notes
-    this.settings.set('notes', JSON.stringify(this.NotesPages));
+    this.settings.set('settings', JSON.stringify(SETTINGS));
   } else {
-    localStorage.setItem('notes', JSON.stringify(this.NotesPages));
+    localStorage.setItem('settings', JSON.stringify(SETTINGS));
   }
 }
 

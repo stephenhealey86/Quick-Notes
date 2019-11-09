@@ -21,6 +21,11 @@ export class MainComponent implements OnInit {
   ngOnInit() {
     document.onmouseup = () => this.MouseUp();
     document.onmousemove = (e) => this.MouseMove(e);
+    setTimeout(() => {
+      this.Settings.Notes.forEach((e, i) => {
+        this.ResizeTextArea(i);
+      });
+    }, 20);
   }
 
   //#region Methods

@@ -8,7 +8,7 @@
   <span class="page-list flex-grow-1">
       <span class="d=flex" *ngFor="let page of Settings.NotesPages; let i = index">
         <button (click)="SelectPage(i)" class="btn-side-bar">
-            <input type="text" [(ngModel)]="page.Name">
+            <input id="pageName{{i}}" type="text" [(ngModel)]="page.Name">
         </button>
       </span>
       <span class="d-flex">
