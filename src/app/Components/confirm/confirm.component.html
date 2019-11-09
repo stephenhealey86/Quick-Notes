@@ -1,4 +1,4 @@
-<div [hidden]="!Confirm.Active" class="confirm-container">
+<div [hidden]="!Confirm.Active" class="confirm-container" [ngClass]="{AllCornersRounded: !WindowState}">
   <div class="confirm-offset">
       <div class="confirm-frame">
         <span class="d-flex mb-4">
