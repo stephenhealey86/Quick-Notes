@@ -165,6 +165,10 @@ export class MainComponent implements OnInit {
       const TXTBOX = document.getElementById(`textarea${index}`) as HTMLTextAreaElement;
       const TXT = TXTBOX.value;
       TXTBOX.value = TXT + '\t\u2022 ';
+      TXTBOX.focus();
+    } else {
+      const TXTBOX = document.getElementById(`textarea${index}`) as HTMLTextAreaElement;
+      TXTBOX.focus();
     }
   }
 
