@@ -1,6 +1,6 @@
 {
   "name": "quick-notes",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "main": "main.js",
   "scripts": {
     "ng": "ng",
@@ -9,7 +9,8 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "electron": "ng build --prod && electron ."
+    "electron": "ng build --prod && electron .",
+    "windows-store": "electron-windows-store --input-directory C:\\Users\\Stephen\\Documents\\Dev\\Electron\\QuickNotes\\QuickNotes-win32-x64  --output-directory C:\\Users\\Stephen\\Documents\\Dev\\Electron\\QuickNotes\\WinStore --package-version 1.0.0.0 --package-name QuickNotes --package-display-name Quick-Notes --publisher-display-name \"Stephen Healey\" --identity-name 17880StephenHealey.Quick-Notes --package-description \"Quick and easy way to store your notes.\" -a ./Resources"
   },
   "private": true,
   "dependencies": {
