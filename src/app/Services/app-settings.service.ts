@@ -29,7 +29,7 @@ export class AppSettingsService {
 
 constructor(private electronService: ElectronService, private confirmation: ConfirmationService) {
 
-  if (environment.production) {
+  if (this.isElectron()) {
     // Initialise settings if running electron
     this.settings = this.electronService.remote.require('electron-settings');
   }
@@ -38,10 +38,15 @@ constructor(private electronService: ElectronService, private confirmation: Conf
   this.getNoteFrames();
  }
 
+// Returns true if running in production, Electron is assumed to be true when in production
+isElectron() {
+  return environment.production;
+}
+
 // Gets the noted from storage
 getNoteFrames() {
   // Get notes if running electron
-  if (environment.production) {
+  if (this.isElectron()) {
     // Get notes from storage
     if (this.settings.has('settings')) {
       const SETTINGS = JSON.parse(this.settings.get('settings')) as SettingsModel;
@@ -73,34 +78,34 @@ selectPage(index: number) {
 // Resizes the text area to suit the number of lines
 ResizeTextArea(index: number) {
   // Get app-main position on page
-  const FRAME = document.getElementsByTagName('app-main')[0] as HTMLElement;
-  const LIMITRECT = FRAME.getBoundingClientRect();
+  const APP_MAIN_ELEMENT = document.getElementsByTagName('app-main')[0] as HTMLElement;
+  const WINDOW_FRAME_BOUNDRY_LIMITS = APP_MAIN_ELEMENT.getBoundingClientRect();
   // Get textarea and sizes
-  const ELEMENT = document.getElementById(`textarea${index}`) as HTMLTextAreaElement;
-  const HEIGHT = ELEMENT.offsetHeight;
+  const TEXT_AREA_ELEMENT = document.getElementById(`textarea${index}`) as HTMLTextAreaElement;
+  const TEXT_AREA_ELEMENT_HEIGHT = TEXT_AREA_ELEMENT.offsetHeight;
   // Resize textarea
-  ELEMENT.style.height = '0px';
-  let scroll = ELEMENT.scrollHeight;
-  scroll = scroll >= 97 ? scroll : 97;
-  ELEMENT.style.height = `${scroll}px`;
-  const bottom = ELEMENT.getBoundingClientRect().bottom;
+  TEXT_AREA_ELEMENT.style.height = '0px';
+  let textAreaScrollHeight = TEXT_AREA_ELEMENT.scrollHeight;
+  textAreaScrollHeight = textAreaScrollHeight >= 97 ? textAreaScrollHeight : 97;
+  TEXT_AREA_ELEMENT.style.height = `${scroll}px`;
+  const TEXT_AREA_BOTTOM = TEXT_AREA_ELEMENT.getBoundingClientRect().bottom;
   // Reset if out of bounds
-  if (LIMITRECT.bottom < bottom) {
-    ELEMENT.style.height = `${HEIGHT}px`;
+  if (WINDOW_FRAME_BOUNDRY_LIMITS.bottom < TEXT_AREA_BOTTOM) {
+    TEXT_AREA_ELEMENT.style.height = `${TEXT_AREA_ELEMENT_HEIGHT}px`;
   }
   // Show scroll is possible
-  if (ELEMENT.scrollHeight > ELEMENT.offsetHeight) {
-    ELEMENT.classList.add('showScroll');
-    ELEMENT.scrollTo(0, ELEMENT.selectionStart);
+  if (TEXT_AREA_ELEMENT.scrollHeight > TEXT_AREA_ELEMENT.offsetHeight) {
+    TEXT_AREA_ELEMENT.classList.add('showScroll');
+    TEXT_AREA_ELEMENT.scrollTo(0, TEXT_AREA_ELEMENT.selectionStart);
   } else {
-    ELEMENT.classList.remove('showScroll');
+    TEXT_AREA_ELEMENT.classList.remove('showScroll');
   }
 }
 
 // Saves notes to storage
 setNoteFrames() {
   const SETTINGS = new SettingsModel(this.NotesPages, this.SelectedPage);
-  if (environment.production) {
+  if (this.isElectron()) {
     // Store notes
     this.settings.set('settings', JSON.stringify(SETTINGS));
   } else {
@@ -111,28 +116,36 @@ setNoteFrames() {
 // Adds a new note
 addNewNote() {
   // Create new note
-  const NOTE = new NoteFrame();
+  const NEW_NOTE = new NoteFrame();
   // Get side bar
-  const SIDE_BAR = document.getElementsByClassName('side-bar')[0];
+  const SIDE_BAR_ELEMENT = document.getElementsByClassName('side-bar')[0];
   // Offset new note if sidebar not collapsed
-  if (SIDE_BAR) {
-    if (!SIDE_BAR.classList.contains('side-bar-collapsed')) {
-      NOTE.X += 110;
+  if (SIDE_BAR_ELEMENT) {
+    if (!SIDE_BAR_ELEMENT.classList.contains('side-bar-collapsed')) {
+      NEW_NOTE.X += 110;
     }
   }
   // Add new note to array
-  this.Notes.push(NOTE);
+  this.Notes.push(NEW_NOTE);
 }
 
 // Removes the selected note
 deleteNote(note: NoteFrame) {
-  // Get Note index
-  const INDEX = this.Notes.indexOf(note, 0);
-  // Remove note at index
-  this.Notes.splice(INDEX, 1);
+  if (note) {
+    // Get Note index
+    const INDEX_OF_NOTE = this.Notes.indexOf(note, 0);
+    // Remove note at index
+    this.Notes.splice(INDEX_OF_NOTE, 1);
+    addNoteIfNoNotes();
+  } else {
+    addNoteIfNoNotes();
+    return;
+  }
   // Add new note if no notes left
-  if (this.Notes.length === 0) {
-    this.addNewNote();
+  function addNoteIfNoNotes() {
+    if (this.Notes.length === 0) {
+      this.addNewNote();
+    }
   }
 }
 
@@ -141,11 +154,11 @@ addNewPage() {
   // Limit number of pages to 10
   if (this.NotesPages.length <= 9) {
     // Cretae new NotePage
-    const PAGE = new NotePage();
+    const NOTE_PAGE = new NotePage();
     // Offset note as side bar will be expanded
-    PAGE.Data[0].X += 110;
+    NOTE_PAGE.Data[0].X += 110;
     // Add note to array
-    this.NotesPages.push(PAGE);
+    this.NotesPages.push(NOTE_PAGE);
   }
 }
 
