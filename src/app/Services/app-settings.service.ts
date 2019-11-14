@@ -87,7 +87,7 @@ ResizeTextArea(index: number) {
   TEXT_AREA_ELEMENT.style.height = '0px';
   let textAreaScrollHeight = TEXT_AREA_ELEMENT.scrollHeight;
   textAreaScrollHeight = textAreaScrollHeight >= 97 ? textAreaScrollHeight : 97;
-  TEXT_AREA_ELEMENT.style.height = `${scroll}px`;
+  TEXT_AREA_ELEMENT.style.height = `${textAreaScrollHeight}px`;
   const TEXT_AREA_BOTTOM = TEXT_AREA_ELEMENT.getBoundingClientRect().bottom;
   // Reset if out of bounds
   if (WINDOW_FRAME_BOUNDRY_LIMITS.bottom < TEXT_AREA_BOTTOM) {
