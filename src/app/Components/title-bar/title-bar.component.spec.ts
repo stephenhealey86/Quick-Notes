@@ -4,6 +4,8 @@ import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
 import { TitleBarComponent } from './title-bar.component';
+import { AppSettingsService } from 'src/app/Services/app-settings.service';
+import { ElectronService } from 'ngx-electron';
 
 describe('TitleBarComponent', () => {
   let component: TitleBarComponent;
@@ -11,7 +13,11 @@ describe('TitleBarComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TitleBarComponent ]
+      declarations: [ TitleBarComponent ],
+      providers: [
+        AppSettingsService,
+        ElectronService
+      ],
     })
     .compileComponents();
   }));
