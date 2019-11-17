@@ -39,7 +39,7 @@ constructor(private electronService: ElectronService, private confirmation: Conf
  }
 
 // Returns true if running in production, Electron is assumed to be true when in production
-isElectron() {
+isElectron(): boolean {
   return environment.production;
 }
 
@@ -67,17 +67,22 @@ getNoteFrames() {
 }
 
 selectPage(index: number) {
-  this.SelectedPage = index;
-  setTimeout(() => {
-    this.Notes.forEach((e, i) => {
-      this.ResizeTextArea(i);
-    });
-  }, 20);
+  if (index && index < this.NotesPages.length) {
+    this.SelectedPage = index;
+    setTimeout(() => {
+      this.Notes.forEach((e, i) => {
+        this.ResizeTextArea(i);
+      });
+    }, 20);
+  } else {
+    throw new Error('Page out of range');
+  }
 }
 
 // Resizes the text area to suit the number of lines
 ResizeTextArea(index: number) {
-  // Get app-main position on page
+  try {
+    // Get app-main position on page
   const APP_MAIN_ELEMENT = document.getElementsByTagName('app-main')[0] as HTMLElement;
   const WINDOW_FRAME_BOUNDRY_LIMITS = APP_MAIN_ELEMENT.getBoundingClientRect();
   // Get textarea and sizes
@@ -100,6 +105,10 @@ ResizeTextArea(index: number) {
   } else {
     TEXT_AREA_ELEMENT.classList.remove('showScroll');
   }
+  } catch (error) {
+    // Implement logging
+    throw error;
+  }
 }
 
 // Saves notes to storage
@@ -117,26 +126,38 @@ setNoteFrames() {
 addNewNote() {
   // Create new note
   const NEW_NOTE = new NoteFrame();
-  // Get side bar
-  const SIDE_BAR_ELEMENT = document.getElementsByClassName('side-bar')[0];
-  // Offset new note if sidebar not collapsed
-  if (SIDE_BAR_ELEMENT) {
-    if (!SIDE_BAR_ELEMENT.classList.contains('side-bar-collapsed')) {
+  try {
+    // Get side bar
+    const SIDE_BAR_ELEMENT = document.getElementsByClassName('side-bar')[0];
+    // Offset new note if sidebar not collapsed
+    if (SIDE_BAR_ELEMENT) {
+      if (!SIDE_BAR_ELEMENT.classList.contains('side-bar-collapsed')) {
       NEW_NOTE.X += 110;
     }
   }
-  // Add new note to array
-  this.Notes.push(NEW_NOTE);
+  } catch (error) {
+    // Implement logging
+  } finally {
+    // Add new note to array
+    this.Notes.push(NEW_NOTE);
+  }
 }
 
 // Removes the selected note
 deleteNote(note: NoteFrame) {
   if (note) {
-    // Get Note index
-    const INDEX_OF_NOTE = this.Notes.indexOf(note, 0);
-    // Remove note at index
-    this.Notes.splice(INDEX_OF_NOTE, 1);
-    addNoteIfNoNotes();
+    try {
+      // Get Note index
+      const INDEX_OF_NOTE = this.Notes.indexOf(note, 0);
+      if (INDEX_OF_NOTE < 0) {
+        return;
+      }
+      // Remove note at index
+      this.Notes.splice(INDEX_OF_NOTE, 1);
+      addNoteIfNoNotes();
+    } catch (error) {
+      // Implement logging
+    }
   } else {
     addNoteIfNoNotes();
     return;
