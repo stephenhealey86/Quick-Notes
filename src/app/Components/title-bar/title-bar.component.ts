@@ -36,7 +36,7 @@ export class TitleBarComponent implements OnInit {
   // Saves all notes, animates close window and closes window
   closeWindow() {
     // Store notes
-    this.settings.setNoteFrames();
+    this.settings.saveNoteFramesToStorage();
     // Annimate
     const DIV = document.getElementsByClassName('open-app')[0] as HTMLElement;
     DIV.style.transformOrigin = 'bottom left';

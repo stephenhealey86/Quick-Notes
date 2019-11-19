@@ -24,7 +24,7 @@ describe('Service: AppSettings', () => {
   });
 
   it('Electron should not be running', () => {
-    expect(service.isElectron()).toBe(false);
+    expect(service.isRunningInElectron()).toBe(false);
   });
 
   it('getNotes() should initialise NotesPages', () => {
@@ -41,21 +41,21 @@ describe('Service: AppSettings', () => {
     expect(() => { service.selectPage(null); }).toThrow(new Error('Page out of range'));
   });
 
-  it('ResizeTextArea() should throw error', () => {
+  it('resizeTextArea() should throw error', () => {
     // Arrange
     const TESTVAR = 1;
     // Act & Assert
-    expect(() => { service.ResizeTextArea(TESTVAR); }).toThrow();
-    expect(() => { service.ResizeTextArea(undefined); }).toThrow();
-    expect(() => { service.ResizeTextArea(null); }).toThrow();
+    expect(() => { service.resizeTextArea(TESTVAR); }).toThrow();
+    expect(() => { service.resizeTextArea(undefined); }).toThrow();
+    expect(() => { service.resizeTextArea(null); }).toThrow();
   });
 
-  it('setNoteFrames() should create/save settings', () => {
+  it('saveNoteFramesToStorage() should create/save settings', () => {
     // Arrange
     const EXPECTED = new SettingsModel(service.NotesPages, service.SelectedPage);
     // Act
-    service.setNoteFrames();
-    service.getNoteFrames();
+    service.saveNoteFramesToStorage();
+    service.getNoteFramesFromStorage();
     const TEST = new SettingsModel(service.NotesPages, service.SelectedPage);
     // Assert
     expect(TEST).toEqual(EXPECTED);

@@ -12,76 +12,89 @@ import { SettingsModel } from '../Models/SettingsModel';
 export class AppSettingsService {
 
   //#region Variables
-  // Holds the selected page
+  NEW_NOTE_PLACEMENT_OFFSET_X = 110;
+  MAX_NUMBER_OF_PAGES = 10;
   SelectedPage = 0;
-  // Store the note pages
   NotesPages: NotePage[] = [];
-  // Gets the noteframes based on selected page
+  settings: typeof settings;
   get Notes(): NoteFrame[] {
     return this.NotesPages[this.SelectedPage].Data;
   }
-  // Set the noteframes based on selected page
   set Notes(value: NoteFrame[]) {
     this.NotesPages[this.SelectedPage].Data = value;
   }
-  // Electron settings
-  settings: typeof settings;
 
 constructor(private electronService: ElectronService, private confirmation: ConfirmationService) {
-
-  if (this.isElectron()) {
-    // Initialise settings if running electron
+  
+  if (this.isRunningInElectron()) {
     this.settings = this.electronService.remote.require('electron-settings');
   }
-
-  // Get stored notes
-  this.getNoteFrames();
+  this.getNoteFramesFromStorage();
  }
 
 // Returns true if running in production, Electron is assumed to be true when in production
-isElectron(): boolean {
+isRunningInElectron(): boolean {
   return environment.production;
 }
 
-// Gets the noted from storage
-getNoteFrames() {
+// Gets the notes from storage
+getNoteFramesFromStorage(): void {
   // Get notes if running electron
-  if (this.isElectron()) {
-    // Get notes from storage
-    if (this.settings.has('settings')) {
-      const SETTINGS = JSON.parse(this.settings.get('settings')) as SettingsModel;
-      this.NotesPages = SETTINGS.Data;
-      this.SelectedPage = SETTINGS.LastPage >= 0 ? SETTINGS.LastPage : 0;
-    } else {
-      this.NotesPages = [new NotePage()] as NotePage[];
-    }
+  if (this.isRunningInElectron()) {
+    this.getElectronSettings();
   } else { // Get notes if web app
-    const SETTINGS  = JSON.parse(localStorage.getItem('settings'));
+    this.getWebAppSettings();
+  }
+}
+
+getElectronSettings(): void {
+  // Get notes from storage
+  if (this.settings.has('settings')) {
+    const SETTINGS = JSON.parse(this.settings.get('settings')) as SettingsModel;
+    this.NotesPages = SETTINGS.Data;
+    this.SelectedPage = SETTINGS.LastPage >= 0 ? SETTINGS.LastPage : 0;
+  } else {
+    this.NotesPages = [new NotePage()] as NotePage[];
+  }
+}
+
+getWebAppSettings(): void {
+  const SETTINGS  = JSON.parse(localStorage.getItem('settings'));
     if (SETTINGS === null || SETTINGS === undefined) {
       this.NotesPages = [new NotePage()] as NotePage[];
     } else {
       this.NotesPages = SETTINGS.Data;
       this.SelectedPage = SETTINGS.LastPage >= 0 ? SETTINGS.LastPage : 0;
     }
-  }
 }
 
-selectPage(index: number) {
-  if (index && index < this.NotesPages.length) {
+selectPage(index: number): void {
+  if (index !== null && index !== undefined && index < this.NotesPages.length) {
+    selectPageAction.call(this);
+  } else {
+    throw new Error('Page out of range');
+  }
+
+  function selectPageAction(): void {
     this.SelectedPage = index;
     setTimeout(() => {
       this.Notes.forEach((e, i) => {
-        this.ResizeTextArea(i);
+        this.resizeTextArea(i);
       });
     }, 20);
-  } else {
-    throw new Error('Page out of range');
   }
 }
 
 // Resizes the text area to suit the number of lines
-ResizeTextArea(index: number) {
+resizeTextArea(index: number) {
   try {
+    resizeTextAreaAction();
+  } catch (error) {
+    // Implement logging
+    throw error;
+  }
+
+  function resizeTextAreaAction(): void {
     // Get app-main position on page
   const APP_MAIN_ELEMENT = document.getElementsByTagName('app-main')[0] as HTMLElement;
   const WINDOW_FRAME_BOUNDRY_LIMITS = APP_MAIN_ELEMENT.getBoundingClientRect();
@@ -105,19 +118,16 @@ ResizeTextArea(index: number) {
   } else {
     TEXT_AREA_ELEMENT.classList.remove('showScroll');
   }
-  } catch (error) {
-    // Implement logging
-    throw error;
   }
 }
 
 // Saves notes to storage
-setNoteFrames() {
+saveNoteFramesToStorage() {
   const SETTINGS = new SettingsModel(this.NotesPages, this.SelectedPage);
-  if (this.isElectron()) {
-    // Store notes
+  if (this.isRunningInElectron()) {
+    // Store electron notes
     this.settings.set('settings', JSON.stringify(SETTINGS));
-  } else {
+  } else { // Store webapp notes
     localStorage.setItem('settings', JSON.stringify(SETTINGS));
   }
 }
@@ -127,19 +137,23 @@ addNewNote() {
   // Create new note
   const NEW_NOTE = new NoteFrame();
   try {
-    // Get side bar
-    const SIDE_BAR_ELEMENT = document.getElementsByClassName('side-bar')[0];
-    // Offset new note if sidebar not collapsed
-    if (SIDE_BAR_ELEMENT) {
-      if (!SIDE_BAR_ELEMENT.classList.contains('side-bar-collapsed')) {
-      NEW_NOTE.X += 110;
-    }
-  }
+    addNewNoteAction();
   } catch (error) {
     // Implement logging
   } finally {
     // Add new note to array
     this.Notes.push(NEW_NOTE);
+  }
+
+  function addNewNoteAction(): void {
+    // Get side bar
+    const SIDE_BAR_ELEMENT = document.getElementsByClassName('side-bar')[0];
+    // Offset new note if sidebar not collapsed
+    if (SIDE_BAR_ELEMENT) {
+      if (!SIDE_BAR_ELEMENT.classList.contains('side-bar-collapsed')) {
+        NEW_NOTE.X += this.NEW_NOTE_PLACEMENT_OFFSET_X;
+      }
+    }
   }
 }
 
@@ -147,14 +161,7 @@ addNewNote() {
 deleteNote(note: NoteFrame) {
   if (note) {
     try {
-      // Get Note index
-      const INDEX_OF_NOTE = this.Notes.indexOf(note, 0);
-      if (INDEX_OF_NOTE < 0) {
-        return;
-      }
-      // Remove note at index
-      this.Notes.splice(INDEX_OF_NOTE, 1);
-      addNoteIfNoNotes();
+      deleteNoteAction.call(this);
     } catch (error) {
       // Implement logging
     }
@@ -162,7 +169,17 @@ deleteNote(note: NoteFrame) {
     addNoteIfNoNotes();
     return;
   }
-  // Add new note if no notes left
+
+  function deleteNoteAction(): void {
+    // Get Note index
+    const INDEX_OF_NOTE = this.Notes.indexOf(note, 0);
+    if (INDEX_OF_NOTE < 0) {
+      return;
+    }
+    // Remove note at index
+    this.Notes.splice(INDEX_OF_NOTE, 1);
+    addNoteIfNoNotes();
+  }
   function addNoteIfNoNotes() {
     if (this.Notes.length === 0) {
       this.addNewNote();
@@ -172,13 +189,10 @@ deleteNote(note: NoteFrame) {
 
 // Adds a new page
 addNewPage() {
-  // Limit number of pages to 10
-  if (this.NotesPages.length <= 9) {
-    // Cretae new NotePage
+  // Limit number of pages to MAX_NUMBER_OF_PAGES
+  if (this.NotesPages.length < this.MAX_NUMBER_OF_PAGES) {
     const NOTE_PAGE = new NotePage();
-    // Offset note as side bar will be expanded
-    NOTE_PAGE.Data[0].X += 110;
-    // Add note to array
+    NOTE_PAGE.Data[0].X += this.NEW_NOTE_PLACEMENT_OFFSET_X;
     this.NotesPages.push(NOTE_PAGE);
   }
 }
@@ -186,7 +200,6 @@ addNewPage() {
 // Deletes page based on user selection
 async deletePage() {
   if (await this.confirmation.ConfirmAsyc('Delete Page')) {
-    // Delete page
     this.NotesPages.splice(this.SelectedPage, 1);
     // Add new page if empty
     if (this.NotesPages.length === 0) {

@@ -23,7 +23,7 @@ export class MainComponent implements OnInit {
     document.onmousemove = (e) => this.MouseMove(e);
     setTimeout(() => {
       this.Settings.Notes.forEach((e, i) => {
-        this.ResizeTextArea(i);
+        this.resizeTextArea(i);
       });
     }, 20);
   }
@@ -44,7 +44,7 @@ export class MainComponent implements OnInit {
   }
 
   // Prevents user froming resizing Note outside of page boundries
-  UserResizeTextArea(e: MouseEvent) {
+  UserresizeTextArea(e: MouseEvent) {
     // Check user resizing
     const FRAAME = document.getElementsByTagName('app-main')[0] as HTMLElement;
     const LIMITRECT = FRAAME.getBoundingClientRect();
@@ -70,7 +70,7 @@ export class MainComponent implements OnInit {
     this.MouseIsDown = !this.MouseIsDown;
   }
   // Resizes the text area to suit the number of lines
-  ResizeTextArea(index: number) {
+  resizeTextArea(index: number) {
     // Get app-main position on page
     const FRAME = document.getElementsByTagName('app-main')[0] as HTMLElement;
     const LIMITRECT = FRAME.getBoundingClientRect();
