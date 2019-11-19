@@ -50,8 +50,6 @@ export class SideBarComponent implements OnInit {
 
   async DeletePage() {
     await this.Settings.deletePage();
-    const INDEX = this.Settings.SelectedPage > 0 ? this.Settings.SelectedPage - 1 : 0;
-    this.SelectPage(INDEX);
   }
 
 }

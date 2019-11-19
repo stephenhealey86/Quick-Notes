@@ -22,6 +22,8 @@ constructor() { }
 async ConfirmAsyc(title: string): Promise<boolean> {
   this.Data.Title = title;
   this.Active = true;
+  this.Result = false;
+  await setTimeout(() => { this.Active = false; }, 10000);
   while (this.Active) {
     // Do nothing
     await delay(100);

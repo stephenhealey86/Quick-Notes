@@ -205,6 +205,8 @@ async deletePage() {
     if (this.NotesPages.length === 0) {
       this.addNewPage();
     }
+    const INDEX = this.SelectedPage > 0 ? this.SelectedPage - 1 : 0;
+    this.selectPage(INDEX);
   }
 }
 
