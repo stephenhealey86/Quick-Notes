@@ -7,7 +7,7 @@
   <hr>
   <span class="page-list flex-grow-1">
       <span class="d=flex" *ngFor="let page of Settings.NotesPages; let i = index">
-        <button (click)="SelectPage(i)" class="btn-side-bar">
+        <button (click)="SelectPage(i)" class="btn-side-bar" [ngClass]="{'btn-selected': i === Settings.SelectedPage}">
             <input id="pageName{{i}}" type="text" [(ngModel)]="page.Name">
         </button>
       </span>
