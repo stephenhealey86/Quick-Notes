@@ -18,37 +18,41 @@ export class SideBarComponent implements OnInit {
 
   constructor(public Settings: AppSettingsService) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
   }
 
-  // Toggles the side bar collapsed feature
-  ToggleSideBar() {
+  toggleSideBar(): void {
     this.sideBarCollapsed = !this.sideBarCollapsed;
   }
 
   // Adds a new note
-  AddNewNote() {
+  addNewNote(): void {
     this.Settings.addNewNote();
   }
 
   // Selects the page
-  SelectPage(index: number) {
-    // Set page
-    const ELEMENT = document.getElementById(`pageName${index}`) as HTMLTextAreaElement;
-    if (ELEMENT && ELEMENT.value === 'Rename Me!') {
-      ELEMENT.setSelectionRange(0, ELEMENT.value.length);
+  selectPage(index: number): void {
+    try {
+      // Set page
+      const ELEMENT = document.getElementById(`pageName${index}`) as HTMLTextAreaElement;
+      if (ELEMENT && ELEMENT.value === 'Rename Me!') {
+        ELEMENT.setSelectionRange(0, ELEMENT.value.length);
+      }
+      this.Settings.selectPage(index);
+    } catch (error) {
+      // Implement logging
+      throw error;
     }
-    this.Settings.selectPage(index);
   }
 
   // Adds new page
-  AddPage() {
+  addPage(): void {
     this.Settings.addNewPage();
     const INDEX = this.Settings.NotesPages.length - 1;
-    this.SelectPage(INDEX);
+    this.selectPage(INDEX);
   }
 
-  async DeletePage() {
+  async deletePage(): Promise<void> {
     await this.Settings.deletePage();
   }
 

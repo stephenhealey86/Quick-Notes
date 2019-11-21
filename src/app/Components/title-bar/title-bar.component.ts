@@ -29,12 +29,12 @@ export class TitleBarComponent implements OnInit {
   }
 
   // Emits windowIsMaximised value
-  EmitWindowState() {
+  emitWindowState(): void {
     this.windowState.emit(this.windowIsMaximised);
   }
 
   // Saves all notes, animates close window and closes window
-  closeWindow() {
+  closeWindow(): void {
     // Store notes
     this.settings.saveNoteFramesToStorage();
     // Annimate
@@ -50,22 +50,22 @@ export class TitleBarComponent implements OnInit {
   }
 
   // Minimize the window
-  minWindow() {
+  minWindow(): void {
     if (environment.production) {
       this.window.minimize();
     }
   }
 
   // Maximize the window
-  maxWindow() {
+  maxWindow(): void {
     if (environment.production) {
       if (this.windowIsMaximised) {
         this.windowIsMaximised = false;
-        this.EmitWindowState();
+        this.emitWindowState();
         this.window.unmaximize();
       } else {
         this.windowIsMaximised = true;
-        this.EmitWindowState();
+        this.emitWindowState();
         this.window.maximize();
       }
     }

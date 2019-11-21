@@ -86,7 +86,7 @@ selectPage(index: number): void {
 }
 
 // Resizes the text area to suit the number of lines
-resizeTextArea(index: number) {
+resizeTextArea(index: number): void {
   try {
     resizeTextAreaAction();
   } catch (error) {
@@ -122,7 +122,7 @@ resizeTextArea(index: number) {
 }
 
 // Saves notes to storage
-saveNoteFramesToStorage() {
+saveNoteFramesToStorage(): void {
   const SETTINGS = new SettingsModel(this.NotesPages, this.SelectedPage);
   if (this.isRunningInElectron()) {
     // Store electron notes
@@ -133,7 +133,7 @@ saveNoteFramesToStorage() {
 }
 
 // Adds a new note
-addNewNote() {
+addNewNote(): void {
   // Create new note
   const NEW_NOTE = new NoteFrame();
   try {
@@ -158,7 +158,7 @@ addNewNote() {
 }
 
 // Removes the selected note
-deleteNote(note: NoteFrame) {
+deleteNote(note: NoteFrame): void {
   if (note) {
     try {
       deleteNoteAction.call(this);
@@ -166,7 +166,7 @@ deleteNote(note: NoteFrame) {
       // Implement logging
     }
   } else {
-    addNoteIfNoNotes();
+    addNoteIfNoNotes.call(this);
     return;
   }
 
@@ -178,9 +178,9 @@ deleteNote(note: NoteFrame) {
     }
     // Remove note at index
     this.Notes.splice(INDEX_OF_NOTE, 1);
-    addNoteIfNoNotes();
+    addNoteIfNoNotes.call(this);
   }
-  function addNoteIfNoNotes() {
+  function addNoteIfNoNotes(): void {
     if (this.Notes.length === 0) {
       this.addNewNote();
     }
@@ -198,8 +198,8 @@ addNewPage() {
 }
 
 // Deletes page based on user selection
-async deletePage() {
-  if (await this.confirmation.ConfirmAsyc('Delete Page')) {
+async deletePage(): Promise<void> {
+  if (await this.confirmation.confirmAsyc('Delete Page')) {
     this.NotesPages.splice(this.SelectedPage, 1);
     // Add new page if empty
     if (this.NotesPages.length === 0) {

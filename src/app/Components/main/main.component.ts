@@ -18,9 +18,9 @@ export class MainComponent implements OnInit {
 
   constructor(public Settings: AppSettingsService) {}
 
-  ngOnInit() {
-    document.onmouseup = () => this.MouseUp();
-    document.onmousemove = (e) => this.MouseMove(e);
+  ngOnInit(): void {
+    document.onmouseup = () => this.userStoppedDraggingNote();
+    document.onmousemove = (e) => this.userIsDraggingNote(e);
     setTimeout(() => {
       this.Settings.Notes.forEach((e, i) => {
         this.resizeTextArea(i);
@@ -29,48 +29,71 @@ export class MainComponent implements OnInit {
   }
 
   //#region Methods
-  // Increments Note.Priority variable
-  NotePriorityChanged(note: Note) {
+  userStoppedDraggingNote(): void {
+    // Clear place holder note if exists
+    if (this.NoteToDrag) {
+      this.NoteToDrag.Draggable = false;
+      this.NoteToDrag = null;
+    }
+  }
+
+  userStatedDraggingNote(note: NoteFrame): void {
+    // Enable note dragging
+    note.Draggable = !note.Draggable;
+  }
+
+  notePriorityChanged(note: Note): void {
     note.Priority = note.Priority >= 3 ? 0 : note.Priority + 1;
   }
 
-  // Passes focus onto textarea from input
-  KeyPressed(event: KeyboardEvent, index: number) {
-    if (event.key === 'Enter' || event.key === 'Tab') {
-      event.preventDefault();
-      const TXT = document.getElementById(`textarea${index}`) as HTMLTextAreaElement;
-      TXT.focus();
+  passFocusToTextArea(event: KeyboardEvent, index: number): void {
+    try {
+      if (event.key === 'Enter' || event.key === 'Tab') {
+        event.preventDefault();
+        const TXT = document.getElementById(`textarea${index}`) as HTMLTextAreaElement;
+        TXT.focus();
+      }
+    } catch (error) {
+      // Implement logging
+      throw error;
     }
   }
 
-  // Prevents user froming resizing Note outside of page boundries
-  UserresizeTextArea(e: MouseEvent) {
-    // Check user resizing
-    const FRAAME = document.getElementsByTagName('app-main')[0] as HTMLElement;
-    const LIMITRECT = FRAAME.getBoundingClientRect();
-    const ELEMENT = e.target as HTMLElement;
-    const DIV = ELEMENT.closest('.NoteFrame') as HTMLElement;
-    // Resizing Notes
-    if (this.MouseIsDown) {
-      // Mouse is down check boundries
-      if ((LIMITRECT.right < DIV.getBoundingClientRect().right)) {
-        // Reszie width
-        const width = LIMITRECT.right - DIV.getBoundingClientRect().left - 5;
-        DIV.style.width = width + 'px';
-      }
-      // If width is minWidth
-      if ((LIMITRECT.right < DIV.getBoundingClientRect().right)) {
-        DIV.style.left = (LIMITRECT.right - DIV.offsetWidth - 20) + 'px';
+  resizeNoteConstraints(e: MouseEvent): void {
+    try {
+      resizeNoteConstraintsAction.call(this);
+    } catch (error) {
+      // Implement logging
+      throw error;
+    }
+
+    function resizeNoteConstraintsAction(): void {
+      // Check user resizing
+      const FRAME = document.getElementsByTagName('app-main')[0] as HTMLElement;
+      const LIMITRECT = FRAME.getBoundingClientRect();
+      const ELEMENT = e.target as HTMLElement;
+      const DIV = ELEMENT.closest('.NoteFrame') as HTMLElement;
+      // Resizing Notes
+      if (this.MouseIsDown) {
+        // Mouse is down check boundries
+        if ((LIMITRECT.right < DIV.getBoundingClientRect().right)) {
+          // Reszie width
+          const width = LIMITRECT.right - DIV.getBoundingClientRect().left - 5;
+          DIV.style.width = width + 'px';
+        }
+        // If width is minWidth
+        if ((LIMITRECT.right < DIV.getBoundingClientRect().right)) {
+          DIV.style.left = (LIMITRECT.right - DIV.offsetWidth - 20) + 'px';
+        }
       }
     }
   }
 
-  // Changes MouseIsDown state
-  ToggleMouseDown() {
+  toggleMouseDownState(): void {
     this.MouseIsDown = !this.MouseIsDown;
   }
   // Resizes the text area to suit the number of lines
-  resizeTextArea(index: number) {
+  resizeTextArea(index: number): void {
     // Get app-main position on page
     const FRAME = document.getElementsByTagName('app-main')[0] as HTMLElement;
     const LIMITRECT = FRAME.getBoundingClientRect();
@@ -96,28 +119,11 @@ export class MainComponent implements OnInit {
     }
   }
 
-  // Removes the selected note
-  DeleteNote(note: NoteFrame) {
+  deleteNote(note: NoteFrame): void {
     this.Settings.deleteNote(note);
   }
 
-  // Cancels note dragging
-  MouseUp() {
-    // Clear place holder note if exists
-    if (this.NoteToDrag) {
-      this.NoteToDrag.Draggable = false;
-      this.NoteToDrag = null;
-    }
-  }
-
-  // Enables note dragging
-  MouseDown(note: NoteFrame) {
-    // Enable note dragging
-    note.Draggable = !note.Draggable;
-  }
-
-  // Sets the note with focus to front
-  BringToFront(e: MouseEvent, note: NoteFrame) {
+  bringNoteWithFocusToFront(e: MouseEvent, note: NoteFrame): void {
     // Get element
     const ELEMENT = e.target as HTMLElement;
     const DIV = ELEMENT.closest('.NoteFrame') as HTMLElement;
@@ -128,13 +134,13 @@ export class MainComponent implements OnInit {
     DIV.style.zIndex = note.ZIndex.toString();
   }
 
-  SetDraggableNote(note: NoteFrame) {
+  userChooseNoteToDrag(note: NoteFrame): void {
     this.NoteToDrag = note;
-    this.MouseDown(note);
+    this.userStatedDraggingNote(note);
   }
 
   // Enables dragging of notes
-  MouseMove(e: MouseEvent) {
+  userIsDraggingNote(e: MouseEvent): void {
     if (this.NoteToDrag) {
       if (this.NoteToDrag.Draggable) {
         // Get elements
@@ -159,7 +165,7 @@ export class MainComponent implements OnInit {
   }​
 
   // Toggles the Note bullet point boolean
-  ToggleBulletPoints(note: Note, index: number) {
+  toggleBulletPoints(note: Note, index: number): void {
     note.BulletPoints = !note.BulletPoints;
     if (note.BulletPoints) {
       const TXTBOX = document.getElementById(`textarea${index}`) as HTMLTextAreaElement;
@@ -173,7 +179,7 @@ export class MainComponent implements OnInit {
   }
 
   // Goto textarea newline and add bullet point
-  AddBulletPoint(event: KeyboardEvent, index: number, note: Note) {
+  addBulletPoint(event: KeyboardEvent, index: number, note: Note): void {
     if (event.key === 'Enter' && note.BulletPoints) {
       event.preventDefault();
       const TXTBOX = document.getElementById(`textarea${index}`) as HTMLTextAreaElement;

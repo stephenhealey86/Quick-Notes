@@ -12,6 +12,7 @@ import { ElectronService } from 'ngx-electron';
 describe('MainComponent', () => {
   let component: MainComponent;
   let fixture: ComponentFixture<MainComponent>;
+  let service: AppSettingsService;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -26,6 +27,7 @@ describe('MainComponent', () => {
       ],
     })
     .compileComponents();
+    service = TestBed.get(AppSettingsService);
   }));
 
   beforeEach(() => {
@@ -36,5 +38,9 @@ describe('MainComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('passFocusToTextArea should throw error', () => {
+    expect(() => { component.passFocusToTextArea(null, null); }).toThrow();
   });
 });

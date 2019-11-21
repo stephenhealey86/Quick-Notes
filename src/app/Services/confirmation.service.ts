@@ -19,7 +19,7 @@ export class ConfirmationService {
 constructor() { }
 
 // Shows confirmation popup, pass data to view and waits for user input
-async ConfirmAsyc(title: string): Promise<boolean> {
+async confirmAsyc(title: string): Promise<boolean> {
   this.Data.Title = title;
   this.Active = true;
   this.Result = false;
@@ -32,7 +32,7 @@ async ConfirmAsyc(title: string): Promise<boolean> {
 }
 
 // Sets the user result and hides popup
-SetResult(res: boolean) {
+setResult(res: boolean): void {
   this.Active = false;
   this.Result = res;
 }
