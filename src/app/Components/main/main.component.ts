@@ -183,8 +183,16 @@ export class MainComponent implements OnInit {
     if (event.key === 'Enter' && note.BulletPoints) {
       event.preventDefault();
       const TXTBOX = document.getElementById(`textarea${index}`) as HTMLTextAreaElement;
+      const CURSOR_POS = TXTBOX.selectionEnd;
       const TXT = TXTBOX.value;
-      TXTBOX.value = TXT + '\n\t\u2022 ';
+      if (CURSOR_POS !== TXTBOX.value.length - 4) {
+        const STARTTXT = TXT.slice(0, CURSOR_POS) + '\n\t\u2022 ';
+        const ENDTXT = TXT.slice(CURSOR_POS, TXT.length);
+        TXTBOX.value = STARTTXT + ENDTXT;
+        TXTBOX.selectionEnd = CURSOR_POS + 4;
+      } else {
+        TXTBOX.value = TXT + '\n\t\u2022 ';
+      }
     } else if (event.key === 'Tab') {
       event.preventDefault();
       const TXTBOX = document.getElementById(`textarea${index}`) as HTMLTextAreaElement;
