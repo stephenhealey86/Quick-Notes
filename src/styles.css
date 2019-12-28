@@ -5,6 +5,16 @@
     --md-primary-foreground: #FFFFFF;
 }
 
+@font-face {
+    font-family: Roboto;
+    src: url('src/assets/fonts/Roboto/Roboto-Medium.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: Indie Flower;
+    src: url('src/assets/fonts/Indie_Flower/IndieFlower-Regular.ttf') format('truetype');
+}
+
 html {
     height: 100%;
     background-color: transparent;
