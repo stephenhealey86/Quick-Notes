@@ -16,7 +16,7 @@ function createWindow () {
     minWidth: 600,
     height: 600,
     minHeight: 600,
-    maximizable: true,
+    maximizable: false,
     transparent: true,
     frame: false,
     icon: appIcon,
