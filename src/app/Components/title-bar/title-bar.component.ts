@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, NgZone } from '@angular/core';
 import { ElectronService } from 'ngx-electron';
 import { environment } from 'src/environments/environment';
 import { AppSettingsService } from 'src/app/Services/app-settings.service';
@@ -19,12 +19,33 @@ export class TitleBarComponent implements OnInit {
   window = {} as Electron.BrowserWindow;
   //#endregion
 
-  constructor(private electronService: ElectronService, private settings: AppSettingsService) { }
+  constructor(private electronService: ElectronService, private settings: AppSettingsService, private zone: NgZone) { }
 
   ngOnInit() {
-    if (environment.production) {
+    if (this.isRunningInElectron()) {
       // Get electron window if running in electron
       this.window = this.electronService.remote.getCurrentWindow();
+      this.window.on('maximize', this.checkMaximizeIcon.bind(this));
+      this.window.on('unmaximize', this.checkMaximizeIcon.bind(this));
+    }
+  }
+
+  // Returns true if running in production, Electron is assumed to be true when in production
+  private isRunningInElectron(): boolean {
+    return environment.production;
+  }
+
+  checkMaximizeIcon(): void {
+    if (this.isRunningInElectron()) {
+      if (this.window.isMaximized()) {
+        this.zone.run(() => {
+          this.windowIsMaximised = true;
+        });
+      } else {
+        this.zone.run(() => {
+          this.windowIsMaximised = false;
+        });
+      }
     }
   }
 
@@ -51,14 +72,14 @@ export class TitleBarComponent implements OnInit {
 
   // Minimize the window
   minWindow(): void {
-    if (environment.production) {
+    if (this.isRunningInElectron()) {
       this.window.minimize();
     }
   }
 
   // Maximize the window
   maxWindow(): void {
-    if (environment.production) {
+    if (this.isRunningInElectron()) {
       if (this.windowIsMaximised) {
         this.windowIsMaximised = false;
         this.emitWindowState();
