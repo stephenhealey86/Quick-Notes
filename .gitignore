@@ -46,5 +46,5 @@ testem.log
 Thumbs.db
 
 # Deployment
-/QuickNotes-win32-x64
-/WinStore
+/QuickNotes-win32-*
+/WinStore*

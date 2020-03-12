@@ -10,7 +10,12 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "electron": "ng build --prod && electron .",
-    "windows-store": "electron-windows-store --input-directory C:\\Users\\Stephen\\Documents\\Dev\\Electron\\QuickNotes\\QuickNotes-win32-x64  --output-directory C:\\Users\\Stephen\\Documents\\Dev\\Electron\\QuickNotes\\WinStore --package-version 1.0.2.0 --package-name QuickNotes --package-display-name Quick-Notes --publisher-display-name \"Stephen Healey\" --identity-name 17880StephenHealey.Quick-Notes --package-description \"Quick and easy way to store your notes.\" -a ./Resources"
+    "package-app-32": "ng build --prod && electron-packager . QuickNotes --platform=win32 --arch=ia32 --asar --icon ./src/assets/quick-notes-icon.ico",
+    "package-app-64": "ng build --prod && electron-packager . QuickNotes --platform=win32 --arch=x64 --asar --icon ./src/assets/quick-notes-icon.ico",
+    "package-app-arm": "ng build --prod && electron-packager . QuickNotes --platform=win32 --arch=arm64 --asar --icon ./src/assets/quick-notes-icon.ico",
+    "windows-store-32": "electron-windows-store --input-directory C:\\Users\\Stephen\\Documents\\Dev\\Electron\\QuickNotes\\QuickNotes-win32-ia32  --output-directory C:\\Users\\Stephen\\Documents\\Dev\\Electron\\QuickNotes\\WinStore32 --package-version 1.0.2.0 --package-name QuickNotes --package-display-name Quick-Notes --publisher-display-name \"Stephen Healey\" --identity-name 17880StephenHealey.Quick-Notes --package-description \"Quick and easy way to store your notes.\" -a ./Resources",
+    "windows-store-64": "electron-windows-store --input-directory C:\\Users\\Stephen\\Documents\\Dev\\Electron\\QuickNotes\\QuickNotes-win32-x64  --output-directory C:\\Users\\Stephen\\Documents\\Dev\\Electron\\QuickNotes\\WinStore64 --package-version 1.0.2.0 --package-name QuickNotes --package-display-name Quick-Notes --publisher-display-name \"Stephen Healey\" --identity-name 17880StephenHealey.Quick-Notes --package-description \"Quick and easy way to store your notes.\" -a ./Resources",
+    "windows-store-arm": "electron-windows-store --input-directory C:\\Users\\Stephen\\Documents\\Dev\\Electron\\QuickNotes\\QuickNotes-win32-arm64  --output-directory C:\\Users\\Stephen\\Documents\\Dev\\Electron\\QuickNotes\\WinStoreArm --package-version 1.0.2.0 --package-name QuickNotes --package-display-name Quick-Notes --publisher-display-name \"Stephen Healey\" --identity-name 17880StephenHealey.Quick-Notes --package-description \"Quick and easy way to store your notes.\" -a ./Resources"
   },
   "private": true,
   "dependencies": {
