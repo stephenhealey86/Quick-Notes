@@ -15,7 +15,7 @@ export class AppSettingsService {
   NEW_NOTE_PLACEMENT_OFFSET_X = 110;
   MAX_NUMBER_OF_PAGES = 10;
   SelectedPage = 0;
-  NotesPages: NotePage[] = [];
+  NotesPages = [] as Array<NotePage>;
   settings: typeof settings;
   get Notes(): NoteFrame[] {
     return this.NotesPages[this.SelectedPage].Data;
@@ -25,7 +25,7 @@ export class AppSettingsService {
   }
 
 constructor(private electronService: ElectronService, private confirmation: ConfirmationService) {
-  
+
   if (this.isRunningInElectron()) {
     this.settings = this.electronService.remote.require('electron-settings');
   }
@@ -60,7 +60,7 @@ getElectronSettings(): void {
 
 getWebAppSettings(): void {
   const SETTINGS  = JSON.parse(localStorage.getItem('settings'));
-    if (SETTINGS === null || SETTINGS === undefined) {
+  if (SETTINGS === null || SETTINGS === undefined) {
       this.NotesPages = [new NotePage()] as NotePage[];
     } else {
       this.NotesPages = SETTINGS.Data;

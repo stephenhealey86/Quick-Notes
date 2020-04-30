@@ -73,6 +73,7 @@ describe('Service: AppSettings', () => {
   it('deleteNote() should delete a note', () => {
     if (service.Notes.length > 0) {
       // Arrange
+      service.addNewNote();
       const EXPECTED = service.Notes.length - 1;
       const NOTE_TO_DELETE = service.Notes[0];
       // Act
